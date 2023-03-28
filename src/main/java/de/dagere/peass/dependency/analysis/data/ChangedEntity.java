@@ -136,6 +136,16 @@ public class ChangedEntity implements Comparable<ChangedEntity> {
       final String result = javaClazzName.contains(".") ? javaClazzName.substring(0, javaClazzName.lastIndexOf('.')) : "";
       return result;
    }
+   
+   @JsonIgnore
+   public boolean isInnerClassCall() {
+      return javaClazzName.contains(ChangedEntity.CLAZZ_SEPARATOR);
+   }
+
+   @JsonIgnore
+   public String getOuterClass() {
+      return javaClazzName.substring(0, javaClazzName.lastIndexOf(ChangedEntity.CLAZZ_SEPARATOR));
+   }
 
    public String getClazz() {
       return javaClazzName;
