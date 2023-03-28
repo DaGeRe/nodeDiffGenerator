@@ -18,11 +18,11 @@ import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
 
-import de.dagere.peass.config.FolderConfig;
 import de.dagere.peass.dependency.analysis.data.ChangedEntity;
 import de.dagere.peass.dependency.analysis.data.TestCase;
 import de.dagere.peass.dependency.changesreading.ClazzFinder;
 import de.dagere.peass.dependency.changesreading.JavaParserProvider;
+import de.dagere.peass.nodeDiffGenerator.config.FolderConfig;
 
 /**
  * Searches for all classes in a maven project. Used for instrumeting them.

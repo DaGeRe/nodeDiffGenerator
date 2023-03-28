@@ -11,10 +11,11 @@ import org.apache.logging.log4j.Logger;
 
 import com.github.javaparser.ParseException;
 
-import de.dagere.peass.config.FolderConfig;
 import de.dagere.peass.dependency.analysis.data.ChangedEntity;
 import de.dagere.peass.dependency.changesreading.ClazzChangeData;
 import de.dagere.peass.dependency.changesreading.FileComparisonUtil;
+import de.dagere.peass.nodeDiffGenerator.config.FolderConfig;
+import de.dagere.peass.nodeDiffGenerator.config.SourceCodeFolders;
 
 public class ChangeDetector {
    
