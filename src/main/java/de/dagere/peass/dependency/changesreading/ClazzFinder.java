@@ -10,7 +10,7 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.EnumDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 
-import de.dagere.peass.dependency.analysis.data.ChangedEntity;
+import de.dagere.nodeDiffGenerator.data.MethodCall;
 
 public class ClazzFinder {
    public static String getContainingClazz(final Node statement) {
@@ -32,7 +32,7 @@ public class ClazzFinder {
       return clazz;
    }
 
-   public static TypeDeclaration<?> findClazz(final ChangedEntity entity, final List<Node> nodes) {
+   public static TypeDeclaration<?> findClazz(final MethodCall entity, final List<Node> nodes) {
       TypeDeclaration<?> declaration = null;
       for (final Node node : nodes) {
          if (node instanceof TypeDeclaration<?>) {
@@ -42,8 +42,8 @@ public class ClazzFinder {
                declaration = (ClassOrInterfaceDeclaration) node;
                break;
             } else {
-               if (entity.getSimpleClazzName().startsWith(nameAsString + ChangedEntity.CLAZZ_SEPARATOR)) {
-                  ChangedEntity inner = new ChangedEntity(entity.getSimpleClazzName().substring(nameAsString.length() + 1), entity.getModule());
+               if (entity.getSimpleClazzName().startsWith(nameAsString + MethodCall.CLAZZ_SEPARATOR)) {
+                  MethodCall inner = new MethodCall(entity.getSimpleClazzName().substring(nameAsString.length() + 1), entity.getModule());
                   declaration = findClazz(inner, node.getChildNodes());
                }
             }
@@ -60,7 +60,7 @@ public class ClazzFinder {
          addEnums(node, parent, clazzSeparator, clazzes);
       } else {
          for (final Node child : node.getChildNodes()) {
-            clazzes.addAll(getEntities(child, parent, ChangedEntity.CLAZZ_SEPARATOR));
+            clazzes.addAll(getEntities(child, parent, MethodCall.CLAZZ_SEPARATOR));
          }
       }
       return clazzes;
@@ -71,7 +71,7 @@ public class ClazzFinder {
       final String enumName = parent.length() > 0 ? parent + clazzSeparator + enumDecl.getName().getIdentifier() : enumDecl.getName().getIdentifier();
       clazzes.add(enumName);
       for (final Node child : node.getChildNodes()) {
-         clazzes.addAll(getEntities(child, enumName, ChangedEntity.CLAZZ_SEPARATOR));
+         clazzes.addAll(getEntities(child, enumName, MethodCall.CLAZZ_SEPARATOR));
       }
    }
 
@@ -80,7 +80,7 @@ public class ClazzFinder {
       final String clazzname = parent.length() > 0 ? parent + clazzSeparator + clazz.getName().getIdentifier() : clazz.getName().getIdentifier();
       clazzes.add(clazzname);
       for (final Node child : node.getChildNodes()) {
-         clazzes.addAll(getEntities(child, clazzname, ChangedEntity.CLAZZ_SEPARATOR));
+         clazzes.addAll(getEntities(child, clazzname, MethodCall.CLAZZ_SEPARATOR));
       }
    }
 
@@ -92,11 +92,11 @@ public class ClazzFinder {
       return clazzes;
    }
 
-   public static List<ChangedEntity> getClazzEntities(final CompilationUnit cu) {
+   public static List<MethodCall> getClazzEntities(final CompilationUnit cu) {
       List<String> clazzes = ClazzFinder.getClazzes(cu);
-      List<ChangedEntity> entities = new LinkedList<>();
+      List<MethodCall> entities = new LinkedList<>();
       for (String clazz : clazzes) {
-         entities.add(new ChangedEntity(clazz, ""));
+         entities.add(new MethodCall(clazz, ""));
       }
       return entities;
    }

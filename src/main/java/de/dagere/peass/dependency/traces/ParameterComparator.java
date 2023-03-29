@@ -13,7 +13,7 @@ import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.ast.type.Type;
 import com.github.javaparser.ast.type.TypeParameter;
 
-import de.dagere.peass.dependency.analysis.data.ChangedEntity;
+import de.dagere.nodeDiffGenerator.data.MethodCall;
 
 public class ParameterComparator {
 
@@ -25,7 +25,7 @@ public class ParameterComparator {
       this.clazz = clazz;
    }
 
-   public boolean parametersEqual(final ChangedEntity traceElement, final CallableDeclaration<?> method) {
+   public boolean parametersEqual(final MethodCall traceElement, final CallableDeclaration<?> method) {
       if (traceElement.getParameterTypes().length == 0 && method.getParameters().size() == 0) {
          return true;
       } else if (method.getParameters().size() == 0 && !method.isConstructorDeclaration()) {
@@ -74,7 +74,7 @@ public class ParameterComparator {
       return true;
    }
 
-   private String[] getTraceParameterTypes(final ChangedEntity traceElement, final CallableDeclaration<?> method) {
+   private String[] getTraceParameterTypes(final MethodCall traceElement, final CallableDeclaration<?> method) {
       String[] traceParameterTypes;
       if (method.isConstructorDeclaration()) {
          Node parentNode = method.getParentNode().get();
@@ -95,7 +95,7 @@ public class ParameterComparator {
       return traceParameterTypes;
    }
 
-   private String[] getCleanedTraceParameters(final ChangedEntity te) {
+   private String[] getCleanedTraceParameters(final MethodCall te) {
       String[] traceParameterTypes;
       if (te.isInnerClassCall()) {
          final String outerClazz = te.getOuterClass();

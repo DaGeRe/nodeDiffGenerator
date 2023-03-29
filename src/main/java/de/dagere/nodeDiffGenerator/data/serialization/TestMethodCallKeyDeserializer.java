@@ -1,11 +1,11 @@
-package de.dagere.peass.dependency.analysis.data.deserializer;
+package de.dagere.nodeDiffGenerator.data.serialization;
 
 import java.io.IOException;
 
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.KeyDeserializer;
 
-import de.dagere.peass.dependency.analysis.testData.TestMethodCall;
+import de.dagere.nodeDiffGenerator.data.TestMethodCall;
 
 public class TestMethodCallKeyDeserializer extends KeyDeserializer {
 

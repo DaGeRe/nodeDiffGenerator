@@ -12,7 +12,7 @@ import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.comments.Comment;
 
-import de.dagere.peass.dependency.analysis.data.ChangedEntity;
+import de.dagere.nodeDiffGenerator.data.MethodCall;
 
 /**
  * This class tests whether comments can be removed; therefore, it contains some comments itself
@@ -30,7 +30,7 @@ public class TestCommentRemover {
       CompilationUnit unit = JavaParserProvider.parse(testFile);
 
       // This comment should be removed
-      TypeDeclaration<?> clazz = ClazzFinder.findClazz(new ChangedEntity("de.dagere.peass.dependency.changesreading.TestCommentRemover"), unit.getChildNodes());
+      TypeDeclaration<?> clazz = ClazzFinder.findClazz(new MethodCall("de.dagere.peass.dependency.changesreading.TestCommentRemover"), unit.getChildNodes());
       new CommentRemover(clazz);
 
       Assert.assertFalse(clazz.getComment().isPresent());

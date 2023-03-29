@@ -9,9 +9,9 @@ import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
+import de.dagere.nodeDiffGenerator.data.MethodCall;
 import de.dagere.peass.TestConstants;
 import de.dagere.peass.dependency.ClazzFileFinder;
-import de.dagere.peass.dependency.analysis.data.ChangedEntity;
 import de.dagere.peass.dependency.changesreading.FileComparisonUtil;
 
 public class TestClazzFileFinder {
@@ -36,16 +36,16 @@ public class TestClazzFileFinder {
    
    @Test
    public void testGetSourceFile() throws FileNotFoundException {
-      File sourceFileClass = new ClazzFileFinder(TestConstants.DEFAULT_FOLDERS).getSourceFile(SOURCE, new ChangedEntity("de.dagere.LocalClass"));
+      File sourceFileClass = new ClazzFileFinder(TestConstants.DEFAULT_FOLDERS).getSourceFile(SOURCE, new MethodCall("de.dagere.LocalClass"));
       Assert.assertNotNull(sourceFileClass);
       
-      File sourceFileEnum = new ClazzFileFinder(TestConstants.DEFAULT_FOLDERS).getSourceFile(SOURCE, new ChangedEntity("de.dagere.LocalEnum"));
+      File sourceFileEnum = new ClazzFileFinder(TestConstants.DEFAULT_FOLDERS).getSourceFile(SOURCE, new MethodCall("de.dagere.LocalEnum"));
       Assert.assertNotNull(sourceFileEnum);
       
-      File sourceFileInterface = new ClazzFileFinder(TestConstants.DEFAULT_FOLDERS).getSourceFile(SOURCE, new ChangedEntity("de.dagere.LocalInterface"));
+      File sourceFileInterface = new ClazzFileFinder(TestConstants.DEFAULT_FOLDERS).getSourceFile(SOURCE, new MethodCall("de.dagere.LocalInterface"));
       Assert.assertNotNull(sourceFileInterface);
       
-      ChangedEntity exampleEntity = new ChangedEntity("de.dagere.LocalClass#myMethod(int)");
+      MethodCall exampleEntity = new MethodCall("de.dagere.LocalClass#myMethod(int)");
       String text = FileComparisonUtil.getMethodSource(SOURCE, exampleEntity, exampleEntity.getMethod(), TestConstants.DEFAULT_FOLDERS);
       MatcherAssert.assertThat(text, Matchers.containsString("this.i = i;"));
    }

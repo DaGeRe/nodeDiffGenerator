@@ -12,7 +12,7 @@ import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 
-import de.dagere.peass.dependency.analysis.data.ChangedEntity;
+import de.dagere.nodeDiffGenerator.data.MethodCall;
 
 public class MethodReader {
 
@@ -24,7 +24,7 @@ public class MethodReader {
       this.clazz = clazz;
    }
 
-   public CallableDeclaration<?> getMethod(final Node node, final ChangedEntity currentTraceElement) {
+   public CallableDeclaration<?> getMethod(final Node node, final MethodCall currentTraceElement) {
       if (node != null && node.getParentNode().isPresent()) {
          final Node parent = node.getParentNode().get();
          if (node instanceof MethodDeclaration) {

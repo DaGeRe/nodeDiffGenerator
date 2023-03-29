@@ -1,4 +1,4 @@
-package de.dagere.peass.dependency.analysis.data;
+package de.dagere.nodeDiffGenerator.data;
 
 import java.io.File;
 import java.util.LinkedList;
@@ -13,9 +13,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ChangedEntity implements Comparable<ChangedEntity> {
+public class MethodCall implements Comparable<MethodCall> {
 
-   private static final Logger LOG = LogManager.getLogger(ChangedEntity.class);
+   private static final Logger LOG = LogManager.getLogger(MethodCall.class);
 
    public static final String MODULE_SEPARATOR = "§";
    public static final String METHOD_SEPARATOR = "#";
@@ -26,7 +26,7 @@ public class ChangedEntity implements Comparable<ChangedEntity> {
    private final String javaClazzName;
    private final List<String> parameters = new LinkedList<String>();
 
-   public ChangedEntity(@JsonProperty("clazz") final String clazz, @JsonProperty("module") final String module) {
+   public MethodCall(@JsonProperty("clazz") final String clazz, @JsonProperty("module") final String module) {
       if (clazz.contains(File.separator)) {
          throw new RuntimeException("Class should be full qualified name, not path! " + clazz);
       }
@@ -34,8 +34,8 @@ public class ChangedEntity implements Comparable<ChangedEntity> {
       if (!clazz.contains(METHOD_SEPARATOR)) {
          javaClazzName = clazz;
       } else {
-         javaClazzName = clazz.substring(0, clazz.lastIndexOf(ChangedEntity.METHOD_SEPARATOR));
-         method = clazz.substring(clazz.lastIndexOf(ChangedEntity.METHOD_SEPARATOR) + 1);
+         javaClazzName = clazz.substring(0, clazz.lastIndexOf(MethodCall.METHOD_SEPARATOR));
+         method = clazz.substring(clazz.lastIndexOf(MethodCall.METHOD_SEPARATOR) + 1);
       }
       if (method != null && (method.contains("(") && method.contains(")"))) {
          String parameterString = method.substring(method.indexOf("(") + 1, method.length() - 1).replaceAll(" ", "");
@@ -56,7 +56,7 @@ public class ChangedEntity implements Comparable<ChangedEntity> {
    }
 
    @JsonCreator
-   public ChangedEntity(@JsonProperty("clazz") final String clazz, @JsonProperty("module") final String module, @JsonProperty("method") final String testMethodName) {
+   public MethodCall(@JsonProperty("clazz") final String clazz, @JsonProperty("module") final String module, @JsonProperty("method") final String testMethodName) {
       this(clazz, module);
 
       if (testMethodName != null && (testMethodName.contains("(") && testMethodName.contains(")"))) {
@@ -68,14 +68,14 @@ public class ChangedEntity implements Comparable<ChangedEntity> {
       }
    }
 
-   public ChangedEntity(final String fullName) {
-      int moduleIndex = fullName.indexOf(ChangedEntity.MODULE_SEPARATOR);
+   public MethodCall(final String fullName) {
+      int moduleIndex = fullName.indexOf(MethodCall.MODULE_SEPARATOR);
       if (moduleIndex == -1) {
          module = "";
          if (fullName.contains(File.separator)) {
             throw new RuntimeException("Class should be full qualified name, not path! " + fullName);
          }
-         final int methodIndex = fullName.lastIndexOf(ChangedEntity.METHOD_SEPARATOR);
+         final int methodIndex = fullName.lastIndexOf(MethodCall.METHOD_SEPARATOR);
          if (methodIndex == -1) {
             javaClazzName = fullName;
             method = null;
@@ -94,7 +94,7 @@ public class ChangedEntity implements Comparable<ChangedEntity> {
       } else {
          module = fullName.substring(0, moduleIndex);
          String end = fullName.substring(moduleIndex + 1);
-         final int methodIndex = end.lastIndexOf(ChangedEntity.METHOD_SEPARATOR);
+         final int methodIndex = end.lastIndexOf(MethodCall.METHOD_SEPARATOR);
          if (methodIndex == -1) {
             javaClazzName = end;
             method = null;
@@ -128,8 +128,8 @@ public class ChangedEntity implements Comparable<ChangedEntity> {
    
    @JsonIgnore
    public String getSimplestClazzName() {
-      if (javaClazzName.contains(ChangedEntity.CLAZZ_SEPARATOR)) {
-         return javaClazzName.substring(javaClazzName.lastIndexOf(ChangedEntity.CLAZZ_SEPARATOR) + 1);
+      if (javaClazzName.contains(MethodCall.CLAZZ_SEPARATOR)) {
+         return javaClazzName.substring(javaClazzName.lastIndexOf(MethodCall.CLAZZ_SEPARATOR) + 1);
       }
       final String simpleClazz = javaClazzName.substring(javaClazzName.lastIndexOf('.') + 1);
       return simpleClazz;
@@ -148,12 +148,12 @@ public class ChangedEntity implements Comparable<ChangedEntity> {
    
    @JsonIgnore
    public boolean isInnerClassCall() {
-      return javaClazzName.contains(ChangedEntity.CLAZZ_SEPARATOR);
+      return javaClazzName.contains(MethodCall.CLAZZ_SEPARATOR);
    }
 
    @JsonIgnore
    public String getOuterClass() {
-      return javaClazzName.substring(0, javaClazzName.lastIndexOf(ChangedEntity.CLAZZ_SEPARATOR));
+      return javaClazzName.substring(0, javaClazzName.lastIndexOf(MethodCall.CLAZZ_SEPARATOR));
    }
 
    public String getClazz() {
@@ -170,7 +170,7 @@ public class ChangedEntity implements Comparable<ChangedEntity> {
 
    @JsonIgnore
    public String getParameterString() {
-      return ChangedEntityHelper.getParameterString(parameters.toArray(new String[0]));
+      return MethodCallHelper.getParameterString(parameters.toArray(new String[0]));
    }
 
    @JsonInclude(Include.NON_EMPTY)
@@ -190,7 +190,7 @@ public class ChangedEntity implements Comparable<ChangedEntity> {
          result += METHOD_SEPARATOR + method;
       }
       if (parameters.size() > 0) {
-         result += ChangedEntityHelper.getParameterString(parameters.toArray(new String[0]));
+         result += MethodCallHelper.getParameterString(parameters.toArray(new String[0]));
       }
       return result;
    }
@@ -200,8 +200,8 @@ public class ChangedEntity implements Comparable<ChangedEntity> {
       if (this == obj) {
          return true;
       }
-      if (obj instanceof ChangedEntity) {
-         final ChangedEntity other = (ChangedEntity) obj;
+      if (obj instanceof MethodCall) {
+         final MethodCall other = (MethodCall) obj;
          if (method != null) {
             if (other.method == null) {
                return false;
@@ -230,30 +230,30 @@ public class ChangedEntity implements Comparable<ChangedEntity> {
    }
 
    @Override
-   public int compareTo(final ChangedEntity o) {
+   public int compareTo(final MethodCall o) {
       final String own = toString();
       final String other = o.toString();
       return own.compareTo(other);
    }
 
-   public ChangedEntity copy() {
-      final ChangedEntity copy = new ChangedEntity(javaClazzName, module);
+   public MethodCall copy() {
+      final MethodCall copy = new MethodCall(javaClazzName, module);
       copy.setMethod(this.method);
       return copy;
    }
 
    @JsonIgnore
-   public ChangedEntity onlyClazz() {
-      return new ChangedEntity(javaClazzName, module);
+   public MethodCall onlyClazz() {
+      return new MethodCall(javaClazzName, module);
    }
 
    @JsonIgnore
-   public ChangedEntity getSourceContainingClazz() {
+   public MethodCall getSourceContainingClazz() {
       if (!javaClazzName.contains(CLAZZ_SEPARATOR)) {
-         return new ChangedEntity(javaClazzName, module);
+         return new MethodCall(javaClazzName, module);
       } else {
          final String clazzName = javaClazzName.substring(0, javaClazzName.indexOf(CLAZZ_SEPARATOR));
-         return new ChangedEntity(clazzName, module, "");
+         return new MethodCall(clazzName, module, "");
       }
    }
 

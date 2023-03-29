@@ -11,7 +11,7 @@ import com.github.javaparser.ast.body.CallableDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.EnumDeclaration;
 
-import de.dagere.peass.dependency.analysis.data.ChangedEntity;
+import de.dagere.nodeDiffGenerator.data.MethodCall;
 
 public class TestParameterComparator {
 
@@ -24,7 +24,7 @@ public class TestParameterComparator {
       ClassOrInterfaceDeclaration myInner = clazz.findAll(ClassOrInterfaceDeclaration.class).get(1);
       CallableDeclaration<?> method = myInner.findAll(CallableDeclaration.class).get(0);
 
-      ChangedEntity traceElementMethod = new ChangedEntity("Clazz$MyInner", "", "myMethod");
+      MethodCall traceElementMethod = new MethodCall("Clazz$MyInner", "", "myMethod");
       boolean isEqualMethod = new ParameterComparator(clazz).parametersEqual(traceElementMethod, method);
       Assert.assertTrue(isEqualMethod);
    }
@@ -38,7 +38,7 @@ public class TestParameterComparator {
       ClassOrInterfaceDeclaration myInner = clazz.findAll(ClassOrInterfaceDeclaration.class).get(1);
       CallableDeclaration<?> method = myInner.findAll(CallableDeclaration.class).get(0);
 
-      ChangedEntity traceElementConstructorWrong = new ChangedEntity("Clazz$MyInner", "", "<init>");
+      MethodCall traceElementConstructorWrong = new MethodCall("Clazz$MyInner", "", "<init>");
       traceElementConstructorWrong.getParameters().add("Clazz");
       boolean isEqualConstructorWrong = new ParameterComparator(clazz).parametersEqual(traceElementConstructorWrong, method);
       Assert.assertTrue(isEqualConstructorWrong);
@@ -53,7 +53,7 @@ public class TestParameterComparator {
       ClassOrInterfaceDeclaration myInner = clazz.findAll(ClassOrInterfaceDeclaration.class).get(1);
       CallableDeclaration<?> method = myInner.findAll(CallableDeclaration.class).get(0);
 
-      ChangedEntity traceElementConstructorWrong = new ChangedEntity("Clazz$MyInner", "", "<init>");
+      MethodCall traceElementConstructorWrong = new MethodCall("Clazz$MyInner", "", "<init>");
       boolean isEqualConstructor = new ParameterComparator(clazz).parametersEqual(traceElementConstructorWrong, method);
       Assert.assertFalse(isEqualConstructor);
    }
@@ -67,11 +67,11 @@ public class TestParameterComparator {
       ClassOrInterfaceDeclaration innerClass = clazz.findAll(ClassOrInterfaceDeclaration.class).get(1);
       CallableDeclaration<?> method = innerClass.findAll(CallableDeclaration.class).get(0);
 
-      ChangedEntity wrongTraceElement = new ChangedEntity("Clazz$MyInner", "", "myMethod");
+      MethodCall wrongTraceElement = new MethodCall("Clazz$MyInner", "", "myMethod");
       boolean isEqualWrong = new ParameterComparator(clazz).parametersEqual(wrongTraceElement, method);
       Assert.assertFalse(isEqualWrong);
 
-      ChangedEntity correctTraceElement = new ChangedEntity("Clazz$MyInner", "", "myMethod");
+      MethodCall correctTraceElement = new MethodCall("Clazz$MyInner", "", "myMethod");
       correctTraceElement.getParameters().add("int");
       boolean isEqualCorrect = new ParameterComparator(clazz).parametersEqual(correctTraceElement, method);
       Assert.assertTrue(isEqualCorrect);
@@ -79,7 +79,7 @@ public class TestParameterComparator {
 
    @Test
    public void testDoubleInnerComparison() {
-      ChangedEntity traceElement = new ChangedEntity("Clazz$MyInner$SecondInner", "", "<init>");
+      MethodCall traceElement = new MethodCall("Clazz$MyInner$SecondInner", "", "<init>");
       traceElement.getParameters().add("Clazz$MyInner");
       traceElement.getParameters().add("int");
       String methodSource = "class Clazz{ class MyInner{ class SecondInner { public SecondInner(int i){} } } } ";
@@ -103,7 +103,7 @@ public class TestParameterComparator {
       ClassOrInterfaceDeclaration myInner = clazz.findAll(ClassOrInterfaceDeclaration.class).get(1);
       CallableDeclaration<?> method = myInner.findAll(CallableDeclaration.class).get(0);
 
-      ChangedEntity traceElementConstructorWrong = new ChangedEntity("Clazz$MyInner", "", "<init>");
+      MethodCall traceElementConstructorWrong = new MethodCall("Clazz$MyInner", "", "<init>");
       traceElementConstructorWrong.getParameters().add("Clazz");
       traceElementConstructorWrong.getParameters().add("int");
       boolean isEqualConstructorWrong = new ParameterComparator(clazz).parametersEqual(traceElementConstructorWrong, method);
@@ -119,7 +119,7 @@ public class TestParameterComparator {
       ClassOrInterfaceDeclaration myInner = clazz.findAll(ClassOrInterfaceDeclaration.class).get(1);
       CallableDeclaration<?> method = myInner.findAll(CallableDeclaration.class).get(0);
 
-      ChangedEntity traceElementMethodWrong = new ChangedEntity("Clazz$MyInner", "doStuff");
+      MethodCall traceElementMethodWrong = new MethodCall("Clazz$MyInner", "doStuff");
       traceElementMethodWrong.getParameters().add("Clazz");
       traceElementMethodWrong.getParameters().add("int");
       boolean isEqualMethodWrong = new ParameterComparator(clazz).parametersEqual(traceElementMethodWrong, method);
@@ -137,7 +137,7 @@ public class TestParameterComparator {
       EnumDeclaration myInner = clazz.findAll(EnumDeclaration.class).get(0);
       CallableDeclaration<?> method = myInner.findAll(CallableDeclaration.class).get(0);
 
-      ChangedEntity traceElementMethodWrong = new ChangedEntity("Clazz$MyInner", "", "doStuff");
+      MethodCall traceElementMethodWrong = new MethodCall("Clazz$MyInner", "", "doStuff");
       traceElementMethodWrong.getParameters().add("int");
       boolean isEqualMethodWrong = new ParameterComparator(clazz).parametersEqual(traceElementMethodWrong, method);
       Assert.assertTrue(isEqualMethodWrong);

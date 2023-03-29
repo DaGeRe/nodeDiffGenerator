@@ -1,11 +1,9 @@
-package de.dagere.peass.dependency.analysis.data;
+package de.dagere.nodeDiffGenerator.data;
 
 import java.io.File;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import de.dagere.peass.dependency.analysis.testData.TestClazzCall;
 
 
 /**
@@ -25,10 +23,10 @@ public abstract class TestCase implements Comparable<TestCase>, Serializable {
       if (clazz.contains(File.separator)) {
          throw new RuntimeException("Testcase " + clazz + " should be full qualified name, not path!");
       }
-      if (clazz.contains(ChangedEntity.METHOD_SEPARATOR)) {
+      if (clazz.contains(MethodCall.METHOD_SEPARATOR)) {
          throw new RuntimeException("Class and method should be separated: " + clazz);
       }
-      if (clazz.contains(ChangedEntity.MODULE_SEPARATOR)) {
+      if (clazz.contains(MethodCall.MODULE_SEPARATOR)) {
          throw new RuntimeException("Class and module should be separated: " + clazz);
       }
       if (module == null) {
@@ -45,7 +43,7 @@ public abstract class TestCase implements Comparable<TestCase>, Serializable {
    @JsonIgnore
    public String getClassWithModule() {
       if (module != null && !"".equals(module)) {
-         return module + ChangedEntity.MODULE_SEPARATOR + clazz;
+         return module + MethodCall.MODULE_SEPARATOR + clazz;
       } else {
          return clazz;
       }
@@ -55,7 +53,7 @@ public abstract class TestCase implements Comparable<TestCase>, Serializable {
       return module;
    }
 
-   public abstract ChangedEntity toEntity();
+   public abstract MethodCall toEntity();
    
    @JsonIgnore
    public abstract String getExecutable();
@@ -64,7 +62,7 @@ public abstract class TestCase implements Comparable<TestCase>, Serializable {
    public String getTestclazzWithModuleName() {
       String testcase;
       if (module != null && !module.equals("")) {
-         testcase = module + ChangedEntity.MODULE_SEPARATOR + clazz;
+         testcase = module + MethodCall.MODULE_SEPARATOR + clazz;
       } else {
          testcase = clazz;
       }
@@ -97,7 +95,7 @@ public abstract class TestCase implements Comparable<TestCase>, Serializable {
    @JsonIgnore
    public String getPureClazz() {
       String shortClazz = getShortClazz();
-      int innerSeparator = shortClazz.indexOf(ChangedEntity.CLAZZ_SEPARATOR);
+      int innerSeparator = shortClazz.indexOf(MethodCall.CLAZZ_SEPARATOR);
       if (innerSeparator != -1) {
          return shortClazz.substring(innerSeparator + 1, shortClazz.length());
       } else {
@@ -120,8 +118,8 @@ public abstract class TestCase implements Comparable<TestCase>, Serializable {
       return new TestClazzCall(clazz, module);
    }
 
-   public ChangedEntity onlyClazzEntity() {
-      return new ChangedEntity(clazz, module);
+   public MethodCall onlyClazzEntity() {
+      return new MethodCall(clazz, module);
    }
 
 }

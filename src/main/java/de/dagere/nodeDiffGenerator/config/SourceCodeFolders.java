@@ -1,4 +1,4 @@
-package de.dagere.peass.nodeDiffGenerator.config;
+package de.dagere.nodeDiffGenerator.config;
 
 import java.io.File;
 

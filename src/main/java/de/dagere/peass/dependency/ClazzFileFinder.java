@@ -18,11 +18,11 @@ import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
 
-import de.dagere.peass.dependency.analysis.data.ChangedEntity;
-import de.dagere.peass.dependency.analysis.data.TestCase;
+import de.dagere.nodeDiffGenerator.config.FolderConfig;
+import de.dagere.nodeDiffGenerator.data.MethodCall;
+import de.dagere.nodeDiffGenerator.data.TestCase;
 import de.dagere.peass.dependency.changesreading.ClazzFinder;
 import de.dagere.peass.dependency.changesreading.JavaParserProvider;
-import de.dagere.peass.nodeDiffGenerator.config.FolderConfig;
 
 /**
  * Searches for all classes in a maven project. Used for instrumeting them.
@@ -35,7 +35,7 @@ public class ClazzFileFinder {
    private static final Logger LOG = LogManager.getLogger(ClazzFileFinder.class);
 
    public static String getOuterClass(final String clazzname) {
-      final int innerClassSeparatorIndex = clazzname.indexOf(ChangedEntity.CLAZZ_SEPARATOR);
+      final int innerClassSeparatorIndex = clazzname.indexOf(MethodCall.CLAZZ_SEPARATOR);
       final String outerClazzName = innerClassSeparatorIndex != -1 ? clazzname.substring(0, innerClassSeparatorIndex) : clazzname;
       return outerClazzName;
    }
@@ -161,7 +161,7 @@ public class ClazzFileFinder {
       return getClazzFile(moduleOrProjectFolder, testcase.toEntity());
    }
 
-   public File getClazzFile(final File moduleOrProjectFolder, final ChangedEntity entity) {
+   public File getClazzFile(final File moduleOrProjectFolder, final MethodCall entity) {
       if (!moduleOrProjectFolder.exists()) {
          throw new RuntimeException("Module folder " + moduleOrProjectFolder.getAbsolutePath() + " did not exist");
       }
@@ -232,8 +232,8 @@ public class ClazzFileFinder {
       return null;
    }
 
-   public File getSourceFile(final File folder, final ChangedEntity clazz) {
-      final ChangedEntity sourceContainingClazz = clazz.getSourceContainingClazz();
+   public File getSourceFile(final File folder, final MethodCall clazz) {
+      final MethodCall sourceContainingClazz = clazz.getSourceContainingClazz();
 
       File moduleFolder;
       if (sourceContainingClazz.getModule().length() > 0) {

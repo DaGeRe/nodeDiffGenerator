@@ -1,4 +1,4 @@
-package de.dagere.peass.dependency.analysis.testData;
+package de.dagere.nodeDiffGenerator.data;
 
 import java.util.LinkedHashMap;
 
@@ -8,8 +8,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import de.dagere.kopeme.datastorage.ParamNameHelper;
 import de.dagere.kopeme.kopemedata.DatacollectorResult;
 import de.dagere.kopeme.kopemedata.Kopemedata;
-import de.dagere.peass.dependency.analysis.data.ChangedEntity;
-import de.dagere.peass.dependency.analysis.data.TestCase;
 
 /**
  * Represents the call to a test method; this should be used in favor of TestCase, if it is known that a method is present.
@@ -22,11 +20,11 @@ public class TestMethodCall extends TestCase {
    protected final String params;
 
    public TestMethodCall(final Kopemedata data) {
-      this(data.getClazz().contains(ChangedEntity.MODULE_SEPARATOR)
-            ? data.getClazz().substring(data.getClazz().indexOf(ChangedEntity.MODULE_SEPARATOR) + 1, data.getClazz().length())
+      this(data.getClazz().contains(MethodCall.MODULE_SEPARATOR)
+            ? data.getClazz().substring(data.getClazz().indexOf(MethodCall.MODULE_SEPARATOR) + 1, data.getClazz().length())
             : data.getClazz(),
             data.getMethods().get(0).getMethod(),
-            data.getClazz().contains(ChangedEntity.MODULE_SEPARATOR) ? data.getClazz().substring(0, data.getClazz().indexOf(ChangedEntity.MODULE_SEPARATOR)) : "",
+            data.getClazz().contains(MethodCall.MODULE_SEPARATOR) ? data.getClazz().substring(0, data.getClazz().indexOf(MethodCall.MODULE_SEPARATOR)) : "",
             getParamsFromResult(data.getMethods().get(0).getDatacollectorResults().get(0)));
    }
 
@@ -126,12 +124,12 @@ public class TestMethodCall extends TestCase {
    public String toString() {
       String result;
       if (module != null && !"".equals(module)) {
-         result = module + ChangedEntity.MODULE_SEPARATOR + clazz;
+         result = module + MethodCall.MODULE_SEPARATOR + clazz;
       } else {
          result = clazz;
       }
       if (method != null) {
-         result += ChangedEntity.METHOD_SEPARATOR + method;
+         result += MethodCall.METHOD_SEPARATOR + method;
       }
       if (params != null) {
          result += "(" + params + ")";
@@ -139,8 +137,8 @@ public class TestMethodCall extends TestCase {
       return result;
    }
 
-   public ChangedEntity toEntity() {
-      return new ChangedEntity(clazz, module, method);
+   public MethodCall toEntity() {
+      return new MethodCall(clazz, module, method);
    }
 
    public static String getParamsFromResult(DatacollectorResult datacollector) {
@@ -156,7 +154,7 @@ public class TestMethodCall extends TestCase {
 
    public static TestMethodCall createFromClassString(String clazzAndModule, String methodAndParams) {
       String clazz, module, method, params;
-      int moduleIndex = clazzAndModule.indexOf(ChangedEntity.MODULE_SEPARATOR);
+      int moduleIndex = clazzAndModule.indexOf(MethodCall.MODULE_SEPARATOR);
       if (moduleIndex == -1) {
          clazz = clazzAndModule;
          module = "";
@@ -177,9 +175,9 @@ public class TestMethodCall extends TestCase {
 
    public static TestMethodCall createFromString(String testcase) {
       String clazz, module, method, params;
-      final int index = testcase.lastIndexOf(ChangedEntity.METHOD_SEPARATOR);
+      final int index = testcase.lastIndexOf(MethodCall.METHOD_SEPARATOR);
       if (index == -1) {
-         int moduleIndex = testcase.indexOf(ChangedEntity.MODULE_SEPARATOR);
+         int moduleIndex = testcase.indexOf(MethodCall.MODULE_SEPARATOR);
          if (moduleIndex == -1) {
             clazz = testcase;
             module = "";
@@ -191,7 +189,7 @@ public class TestMethodCall extends TestCase {
          params = null;
       } else {
          String start = testcase.substring(0, index);
-         int moduleIndex = testcase.indexOf(ChangedEntity.MODULE_SEPARATOR);
+         int moduleIndex = testcase.indexOf(MethodCall.MODULE_SEPARATOR);
          if (moduleIndex == -1) {
             clazz = start;
             module = "";

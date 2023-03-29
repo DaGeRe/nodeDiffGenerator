@@ -10,8 +10,8 @@ import org.hamcrest.core.IsIterableContaining;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import de.dagere.nodeDiffGenerator.config.FolderConfig;
 import de.dagere.peass.dependency.ClazzFileFinder;
-import de.dagere.peass.nodeDiffGenerator.config.FolderConfig;
 
 public class TestPackageFinder {
 

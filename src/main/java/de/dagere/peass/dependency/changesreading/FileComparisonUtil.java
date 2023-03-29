@@ -38,9 +38,9 @@ import com.github.javaparser.ast.comments.JavadocComment;
 import com.github.javaparser.ast.comments.LineComment;
 import com.github.javaparser.ast.stmt.BlockStmt;
 
+import de.dagere.nodeDiffGenerator.config.FolderConfig;
+import de.dagere.nodeDiffGenerator.data.MethodCall;
 import de.dagere.peass.dependency.ClazzFileFinder;
-import de.dagere.peass.dependency.analysis.data.ChangedEntity;
-import de.dagere.peass.nodeDiffGenerator.config.FolderConfig;
 
 /**
  * Helps to compare whether two versions of a file may have changed performance (and whether this change is for the use of the whole file or only some methods).
@@ -159,7 +159,7 @@ public final class FileComparisonUtil {
       return result;
    }
 
-   public static String getMethodSource(final File projectFolder, final ChangedEntity entity, final String method, final FolderConfig config) throws FileNotFoundException {
+   public static String getMethodSource(final File projectFolder, final MethodCall entity, final String method, final FolderConfig config) throws FileNotFoundException {
       ClazzFileFinder finder = new ClazzFileFinder(config);
       final File file = finder.getSourceFile(projectFolder, entity);
       if (file != null) {
@@ -172,7 +172,7 @@ public final class FileComparisonUtil {
       }
    }
 
-   public static String getMethodSource(final ChangedEntity entity, final String method, final CompilationUnit clazzUnit) {
+   public static String getMethodSource(final MethodCall entity, final String method, final CompilationUnit clazzUnit) {
       final Node node = SourceReadUtils.getMethod(entity, clazzUnit);
       if (node != null) {
          return node.toString();

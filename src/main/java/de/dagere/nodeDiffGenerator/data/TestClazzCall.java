@@ -1,10 +1,7 @@
-package de.dagere.peass.dependency.analysis.testData;
+package de.dagere.nodeDiffGenerator.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import de.dagere.peass.dependency.analysis.data.ChangedEntity;
-import de.dagere.peass.dependency.analysis.data.TestCase;
 
 public class TestClazzCall extends TestCase {
    private static final long serialVersionUID = 7326687309901903065L;
@@ -23,8 +20,8 @@ public class TestClazzCall extends TestCase {
       return test;
    }
 
-   public ChangedEntity toEntity() {
-      return new ChangedEntity(clazz, module);
+   public MethodCall toEntity() {
+      return new MethodCall(clazz, module);
    }
    
    @JsonIgnore
@@ -34,7 +31,7 @@ public class TestClazzCall extends TestCase {
    
    public static TestClazzCall createFromString(String testcase) {
       String module, clazz;
-      int moduleIndex = testcase.indexOf(ChangedEntity.MODULE_SEPARATOR);
+      int moduleIndex = testcase.indexOf(MethodCall.MODULE_SEPARATOR);
       if (moduleIndex == -1) {
          clazz = testcase;
          module = "";
@@ -49,7 +46,7 @@ public class TestClazzCall extends TestCase {
    public String toString() {
       String result;
       if (module != null && !"".equals(module)) {
-         result = module + ChangedEntity.MODULE_SEPARATOR + clazz;
+         result = module + MethodCall.MODULE_SEPARATOR + clazz;
       } else {
          result = clazz;
       }

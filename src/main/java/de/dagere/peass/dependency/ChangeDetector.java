@@ -11,11 +11,11 @@ import org.apache.logging.log4j.Logger;
 
 import com.github.javaparser.ParseException;
 
-import de.dagere.peass.dependency.analysis.data.ChangedEntity;
+import de.dagere.nodeDiffGenerator.config.FolderConfig;
+import de.dagere.nodeDiffGenerator.config.SourceCodeFolders;
+import de.dagere.nodeDiffGenerator.data.MethodCall;
 import de.dagere.peass.dependency.changesreading.ClazzChangeData;
 import de.dagere.peass.dependency.changesreading.FileComparisonUtil;
-import de.dagere.peass.nodeDiffGenerator.config.FolderConfig;
-import de.dagere.peass.nodeDiffGenerator.config.SourceCodeFolders;
 
 public class ChangeDetector {
    
@@ -29,8 +29,8 @@ public class ChangeDetector {
       this.sourceCodeFolders = sourceCodeFolders;
    }
 
-   public void compareClazz(final Map<ChangedEntity, ClazzChangeData> changedClassesMethods, final Iterator<ChangedEntity> clazzIterator) {
-      final ChangedEntity clazz = clazzIterator.next();
+   public void compareClazz(final Map<MethodCall, ClazzChangeData> changedClassesMethods, final Iterator<MethodCall> clazzIterator) {
+      final MethodCall clazz = clazzIterator.next();
       final ClazzChangeData changeData = new ClazzChangeData(clazz);
       try {
          ClazzFileFinder finder = new ClazzFileFinder(config);
@@ -57,12 +57,12 @@ public class ChangeDetector {
       }
    }
    
-   private void compareFiles(final Map<ChangedEntity, ClazzChangeData> changedClassesMethods, final Iterator<ChangedEntity> clazzIterator, final ChangedEntity clazz,
+   private void compareFiles(final Map<MethodCall, ClazzChangeData> changedClassesMethods, final Iterator<MethodCall> clazzIterator, final MethodCall clazz,
          final ClazzChangeData changeData, final File newFile, final File oldFile) throws ParseException, IOException {
       FileComparisonUtil.getChangedMethods(newFile, oldFile, changeData);
       boolean isImportChange = false;
       ClazzFileFinder finder = new ClazzFileFinder(config);
-      for (ChangedEntity entity : changeData.getImportChanges()) {
+      for (MethodCall entity : changeData.getImportChanges()) {
          final File entityFile = finder.getSourceFile(sourceCodeFolders.getProjectFolder(), entity);
          if (entityFile != null && entityFile.exists()) {
             isImportChange = true;

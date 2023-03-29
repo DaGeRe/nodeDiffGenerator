@@ -18,7 +18,7 @@ import com.github.javaparser.ast.body.EnumDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.expr.ObjectCreationExpr;
 
-import de.dagere.peass.dependency.analysis.data.ChangedEntity;
+import de.dagere.nodeDiffGenerator.data.MethodCall;
 import de.dagere.peass.dependency.traces.MethodReader;
 
 public class SourceReadUtils {
@@ -58,7 +58,7 @@ public class SourceReadUtils {
       return foundDeclaredClasses;
    }
    
-   public static CallableDeclaration<?> getMethod(final ChangedEntity currentTraceElement, final CompilationUnit cu) {
+   public static CallableDeclaration<?> getMethod(final MethodCall currentTraceElement, final CompilationUnit cu) {
       if (currentTraceElement.getClazz().contains("$")) {
          final String indexString = currentTraceElement.getClazz().split("\\$")[1];
          if (indexString.matches("[0-9]+")) {
@@ -88,7 +88,7 @@ public class SourceReadUtils {
       return method;
    }
 
-   private static CallableDeclaration<?> getMethodNamedInnerClass(final ChangedEntity currentTraceElement, final CompilationUnit cu) {
+   private static CallableDeclaration<?> getMethodNamedInnerClass(final MethodCall currentTraceElement, final CompilationUnit cu) {
       final Map<String, TypeDeclaration<?>> namedClasses = SourceReadUtils.getNamedClasses(cu, "");
       final String clazz = currentTraceElement.getClazz().substring(currentTraceElement.getClazz().lastIndexOf('.') + 1);
       final TypeDeclaration<?> declaration = namedClasses.get(clazz);
@@ -96,7 +96,7 @@ public class SourceReadUtils {
       return reader.getMethod(declaration, currentTraceElement);
    }
 
-   private static CallableDeclaration<?> getMethodAnonymousClass(final ChangedEntity currentTraceElement, final CompilationUnit cu, final String indexString) {
+   private static CallableDeclaration<?> getMethodAnonymousClass(final MethodCall currentTraceElement, final CompilationUnit cu, final String indexString) {
       final int index = Integer.parseInt(indexString) - 1;
       final List<NodeList<BodyDeclaration<?>>> anonymousClazzes = getAnonymusClasses(cu);
       final NodeList<BodyDeclaration<?>> nodes = anonymousClazzes.get(index);

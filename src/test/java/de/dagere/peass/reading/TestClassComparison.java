@@ -32,7 +32,7 @@ import org.junit.jupiter.api.Test;
 
 import com.github.javaparser.ParseException;
 
-import de.dagere.peass.dependency.analysis.data.ChangedEntity;
+import de.dagere.nodeDiffGenerator.data.MethodCall;
 import de.dagere.peass.dependency.changesreading.ClazzChangeData;
 import de.dagere.peass.dependency.changesreading.FileComparisonUtil;
 
@@ -56,7 +56,7 @@ public class TestClassComparison {
       final File file1 = new File(FOLDER, "Test1_1_Equal.java");
       final File file2 = new File(FOLDER, "Test1_2_Equal.java");
 
-      final ClazzChangeData changedMethods = new ClazzChangeData(new ChangedEntity("Test1_1_Equal", ""));
+      final ClazzChangeData changedMethods = new ClazzChangeData(new MethodCall("Test1_1_Equal", ""));
       FileComparisonUtil.getChangedMethods(file1, file2, changedMethods);
 
       Assert.assertFalse(changedMethods.isChange());
@@ -67,7 +67,7 @@ public class TestClassComparison {
       final File file1 = new File(FOLDER, "Test1_1_Equal.java");
       final File file2 = new File(FOLDER, "Test2_2_Comments.java");
 
-      final ClazzChangeData changedMethods = new ClazzChangeData(new ChangedEntity("Test1_1_Equal", ""));
+      final ClazzChangeData changedMethods = new ClazzChangeData(new MethodCall("Test1_1_Equal", ""));
       FileComparisonUtil.getChangedMethods(file1, file2, changedMethods);
 
       Assert.assertFalse(changedMethods.isChange());
@@ -78,7 +78,7 @@ public class TestClassComparison {
       final File file1 = new File(FOLDER, "Test1_1_Equal.java");
       final File file2 = new File(FOLDER, "Test3_2_MethodComments.java");
 
-      final ClazzChangeData changedMethods = new ClazzChangeData(new ChangedEntity("Test1_1_Equal", ""));
+      final ClazzChangeData changedMethods = new ClazzChangeData(new MethodCall("Test1_1_Equal", ""));
       FileComparisonUtil.getChangedMethods(file1, file2, changedMethods);
 
       Assert.assertFalse(changedMethods.isChange());
@@ -89,7 +89,7 @@ public class TestClassComparison {
       final File file1 = new File(FOLDER, "Test1_1_Equal.java");
       final File file2 = new File(FOLDER, "Test4_2_Formatting.java");
 
-      final ClazzChangeData changedMethods = new ClazzChangeData(new ChangedEntity("Test1_1_Equal", ""));
+      final ClazzChangeData changedMethods = new ClazzChangeData(new MethodCall("Test1_1_Equal", ""));
       FileComparisonUtil.getChangedMethods(file1, file2, changedMethods);
 
       Assert.assertFalse(changedMethods.isChange());
@@ -100,7 +100,7 @@ public class TestClassComparison {
       final File file1 = new File(FOLDER, "Test1_1_Equal.java");
       final File file2 = new File(FOLDER, "Test5_2_Imports.java");
 
-      final ClazzChangeData changedMethods = new ClazzChangeData(new ChangedEntity("Test1_1_Equal", ""));
+      final ClazzChangeData changedMethods = new ClazzChangeData(new MethodCall("Test1_1_Equal", ""));
       FileComparisonUtil.getChangedMethods(file1, file2, changedMethods);
 
       Assert.assertTrue(changedMethods.isChange());
@@ -111,7 +111,7 @@ public class TestClassComparison {
       final File file1 = new File(FOLDER, "Test1_1_Equal.java");
       final File file2 = new File(FOLDER, "Test6_MethodChanged.java");
 
-      final ClazzChangeData changedMethods = new ClazzChangeData(new ChangedEntity("Test1_1_Equal", ""));
+      final ClazzChangeData changedMethods = new ClazzChangeData(new MethodCall("Test1_1_Equal", ""));
       FileComparisonUtil.getChangedMethods(file1, file2, changedMethods);
 
       Assert.assertTrue(changedMethods.isChange());
@@ -128,7 +128,7 @@ public class TestClassComparison {
       final File file1 = new File(FOLDER, "Test1_1_Equal.java");
       final File file2 = new File(FOLDER, "Test7_MethodAdded.java");
 
-      final ClazzChangeData changedMethods = new ClazzChangeData(new ChangedEntity("Test1_1_Equal", ""));
+      final ClazzChangeData changedMethods = new ClazzChangeData(new MethodCall("Test1_1_Equal", ""));
       FileComparisonUtil.getChangedMethods(file1, file2, changedMethods);
 
       Assert.assertTrue(changedMethods.isChange());
@@ -140,7 +140,7 @@ public class TestClassComparison {
       final File file1 = new File(FOLDER, "Test1_1_Equal.java");
       final File file2 = new File(FOLDER, "Test8_2_LineComments.java");
 
-      final ClazzChangeData changedMethods = new ClazzChangeData(new ChangedEntity("Test1_1_Equal", ""));
+      final ClazzChangeData changedMethods = new ClazzChangeData(new MethodCall("Test1_1_Equal", ""));
       FileComparisonUtil.getChangedMethods(file1, file2, changedMethods);
 
       Assert.assertFalse(changedMethods.isChange());
@@ -151,7 +151,7 @@ public class TestClassComparison {
       final File file1 = new File(FOLDER, "Test1_1_Equal.java");
       final File file2 = new File(FOLDER, "Test9_FieldAdded.java");
 
-      final ClazzChangeData changedMethods = new ClazzChangeData(new ChangedEntity("Test1_1_Equal", ""));
+      final ClazzChangeData changedMethods = new ClazzChangeData(new MethodCall("Test1_1_Equal", ""));
       FileComparisonUtil.getChangedMethods(file1, file2, changedMethods);
 
       Assert.assertTrue(changedMethods.isChange());
@@ -162,7 +162,7 @@ public class TestClassComparison {
       final File file1 = new File(FOLDER, "Test1_1_Equal.java");
       final File file2 = new File(FOLDER, "Test10_StaticFieldAdded.java");
 
-      final ClazzChangeData changedMethods = new ClazzChangeData(new ChangedEntity("Test1_1_Equal", ""));
+      final ClazzChangeData changedMethods = new ClazzChangeData(new MethodCall("Test1_1_Equal", ""));
       FileComparisonUtil.getChangedMethods(file1, file2, changedMethods);
 
       Assert.assertTrue(changedMethods.isChange());
@@ -173,7 +173,7 @@ public class TestClassComparison {
       final File file1 = new File(FOLDER, "Test10_StaticFieldAdded.java");
       final File file2 = new File(FOLDER, "Test10_StaticFieldChanged.java");
 
-      final ClazzChangeData changedMethods = new ClazzChangeData(new ChangedEntity("Test1_1_Equal", ""));
+      final ClazzChangeData changedMethods = new ClazzChangeData(new MethodCall("Test1_1_Equal", ""));
       FileComparisonUtil.getChangedMethods(file1, file2, changedMethods);
 
       Assert.assertTrue(changedMethods.isChange());
@@ -184,11 +184,11 @@ public class TestClassComparison {
       final File file1 = new File(FOLDER, "Test13_Parameter.java");
       final File file2 = new File(FOLDER, "Test13_Parameter_changed.java");
 
-      final ClazzChangeData changedMethods = new ClazzChangeData(new ChangedEntity("myPackage.Test", ""));
+      final ClazzChangeData changedMethods = new ClazzChangeData(new MethodCall("myPackage.Test", ""));
       FileComparisonUtil.getChangedMethods(file1, file2, changedMethods);
 
       Assert.assertTrue(changedMethods.isChange());
-      ChangedEntity change = changedMethods.getChanges().iterator().next();
+      MethodCall change = changedMethods.getChanges().iterator().next();
       Assert.assertEquals("myPackage.Test#doStaticThing(java.lang.String,java.lang.Object)", change.toString());
    }
 
@@ -197,7 +197,7 @@ public class TestClassComparison {
       final File file1 = new File(FOLDER, "Test1_1_Equal.java");
       final File file2 = new File(FOLDER, "Test11_ChangeAndAddition.java");
 
-      final ClazzChangeData changedMethods = new ClazzChangeData(new ChangedEntity("Test1_1_Equal", ""));
+      final ClazzChangeData changedMethods = new ClazzChangeData(new MethodCall("Test1_1_Equal", ""));
       FileComparisonUtil.getChangedMethods(file1, file2, changedMethods);
 
       Assert.assertTrue(changedMethods.isChange());
@@ -212,7 +212,7 @@ public class TestClassComparison {
       final File file1 = new File(FOLDER, "Test1_1_Equal.java");
       final File file2 = new File(FOLDER, "Test12_ChangeAndAddition2.java");
 
-      final ClazzChangeData changedMethods = new ClazzChangeData(new ChangedEntity("Test1_1_Equal", ""));
+      final ClazzChangeData changedMethods = new ClazzChangeData(new MethodCall("Test1_1_Equal", ""));
       FileComparisonUtil.getChangedMethods(file1, file2, changedMethods);
 
       Assert.assertTrue(changedMethods.isChange());
@@ -226,11 +226,11 @@ public class TestClassComparison {
       final File file1 = new File(FOLDER, "TestImport_New.java");
       final File file2 = new File(FOLDER, "TestImport_Old.java");
 
-      final ClazzChangeData changedMethods = new ClazzChangeData(new ChangedEntity("de.TestImport_new", ""));
+      final ClazzChangeData changedMethods = new ClazzChangeData(new MethodCall("de.TestImport_new", ""));
       FileComparisonUtil.getChangedMethods(file1, file2, changedMethods);
 
       Assert.assertTrue(changedMethods.isChange());
-      MatcherAssert.assertThat(changedMethods.getChanges(), Matchers.hasItem(new ChangedEntity("de.Test", "")));
-      MatcherAssert.assertThat(changedMethods.getChanges(), Matchers.hasItem(new ChangedEntity("de.Test$InnerTest", "")));
+      MatcherAssert.assertThat(changedMethods.getChanges(), Matchers.hasItem(new MethodCall("de.Test", "")));
+      MatcherAssert.assertThat(changedMethods.getChanges(), Matchers.hasItem(new MethodCall("de.Test$InnerTest", "")));
    }
 }

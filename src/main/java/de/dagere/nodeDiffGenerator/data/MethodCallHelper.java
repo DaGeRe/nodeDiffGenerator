@@ -1,6 +1,6 @@
-package de.dagere.peass.dependency.analysis.data;
+package de.dagere.nodeDiffGenerator.data;
 
-public class ChangedEntityHelper {
+public class MethodCallHelper {
 
    public static String getParameterString(final String[] parameterTypes) {
       if (parameterTypes.length > 0) {
