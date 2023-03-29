@@ -12,6 +12,8 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.ImportDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 
+import de.dagere.nodeDiffGenerator.sourceReading.SourceReadUtils;
+
 public class FQNDeterminer {
 
    private static final Logger LOG = LogManager.getLogger(FQNDeterminer.class);

@@ -1,4 +1,4 @@
-package de.dagere.peass;
+package de.dagere.nodeDiffGenerator.sourceReading;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,8 +13,8 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
 
 import de.dagere.nodeDiffGenerator.data.MethodCall;
+import de.dagere.nodeDiffGenerator.sourceReading.SourceReadUtils;
 import de.dagere.peass.dependency.changesreading.JavaParserProvider;
-import de.dagere.peass.dependency.changesreading.SourceReadUtils;
 
 public class TestSourceDetectionInnerClass {
    @Test

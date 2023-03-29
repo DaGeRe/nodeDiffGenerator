@@ -40,6 +40,7 @@ import com.github.javaparser.ast.stmt.BlockStmt;
 
 import de.dagere.nodeDiffGenerator.config.FolderConfig;
 import de.dagere.nodeDiffGenerator.data.MethodCall;
+import de.dagere.nodeDiffGenerator.sourceReading.SourceReadUtils;
 import de.dagere.peass.dependency.ClazzFileFinder;
 
 /**

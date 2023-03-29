@@ -1,4 +1,4 @@
-package de.dagere.peass;
+package de.dagere.nodeDiffGenerator.sourceReading;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,8 +15,9 @@ import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.BodyDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 
+import de.dagere.nodeDiffGenerator.sourceReading.SourceReadUtils;
+import de.dagere.peass.TestConstants;
 import de.dagere.peass.dependency.changesreading.JavaParserProvider;
-import de.dagere.peass.dependency.changesreading.SourceReadUtils;
 
 public class TestSourceDetection {
    public static final File SOURCE = new File(TestConstants.TEST_RESOURCES, "detection");
