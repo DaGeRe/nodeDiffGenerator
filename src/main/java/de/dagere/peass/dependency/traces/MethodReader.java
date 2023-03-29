@@ -29,7 +29,8 @@ public class MethodReader {
          final Node parent = node.getParentNode().get();
          if (node instanceof MethodDeclaration) {
             final MethodDeclaration method = (MethodDeclaration) node;
-            if (method.getNameAsString().equals(currentTraceElement.getMethod())) {
+            String methodName = method.getNameAsString();
+            if (methodName.equals(currentTraceElement.getMethod())) {
                //TODO LOG.trace
                LOG.trace("Parameter: {} Trace-Parameter: {}", method.getParameters().size(), currentTraceElement.getParameterTypes().length);
                LOG.trace(method.getParameters()); //TODO delete
@@ -38,7 +39,7 @@ public class MethodReader {
                   if (parent instanceof TypeDeclaration<?>) {
                      final TypeDeclaration<?> clazz = (TypeDeclaration<?>) parent;
                      final String clazzName = clazz.getNameAsString();
-                     if (clazzName.equals(currentTraceElement.getSimpleClazzName())) {
+                     if (clazzName.equals(currentTraceElement.getSimplestClazzName())) {
                         return method;
                      }
                   } else {
@@ -52,7 +53,7 @@ public class MethodReader {
                   final ConstructorDeclaration constructor = (ConstructorDeclaration) node;
                   final TypeDeclaration<?> clazz = (TypeDeclaration<?>) parent;
                   LOG.trace(clazz.getNameAsString() + " " + currentTraceElement.getClazz());
-                  if (clazz.getNameAsString().equals(currentTraceElement.getSimpleClazzName())) {
+                  if (clazz.getNameAsString().equals(currentTraceElement.getSimplestClazzName())) {
                      if (new ParameterComparator(this.clazz).parametersEqual(currentTraceElement, constructor)) {
                         return (CallableDeclaration<?>) node;
                      }

@@ -125,6 +125,15 @@ public class ChangedEntity implements Comparable<ChangedEntity> {
    public String getSimpleClazzName() {
       return javaClazzName.substring(javaClazzName.lastIndexOf('.') + 1);
    }
+   
+   @JsonIgnore
+   public String getSimplestClazzName() {
+      if (javaClazzName.contains(ChangedEntity.CLAZZ_SEPARATOR)) {
+         return javaClazzName.substring(javaClazzName.lastIndexOf(ChangedEntity.CLAZZ_SEPARATOR) + 1);
+      }
+      final String simpleClazz = javaClazzName.substring(javaClazzName.lastIndexOf('.') + 1);
+      return simpleClazz;
+   }
 
    @JsonIgnore
    public String getSimpleFullName() {
@@ -319,6 +328,13 @@ public class ChangedEntity implements Comparable<ChangedEntity> {
    @JsonIgnore
    public String[] getParameterTypes() {
       return parameters.toArray(new String[0]);
+   }
+
+   @JsonIgnore
+   public void addParameters(String... parameters) {
+      for (String parameter : parameters) {
+         this.parameters.add(parameter);
+      }
    }
 
 }
