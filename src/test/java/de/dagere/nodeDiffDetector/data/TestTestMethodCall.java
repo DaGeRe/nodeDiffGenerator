@@ -1,4 +1,4 @@
-package de.dagere.peass.dependency.analysis.testData;
+package de.dagere.nodeDiffDetector.data;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;

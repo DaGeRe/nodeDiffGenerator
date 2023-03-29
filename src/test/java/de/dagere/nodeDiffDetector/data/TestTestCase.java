@@ -1,9 +1,7 @@
-package de.dagere.peass.dependency.analysis.data;
+package de.dagere.nodeDiffDetector.data;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
-
-import de.dagere.nodeDiffDetector.data.TestMethodCall;
 
 public class TestTestCase {
    @Test

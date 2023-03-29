@@ -1,4 +1,4 @@
-package de.dagere.peass.dependency.analysis.data;
+package de.dagere.nodeDiffDetector.data;
 
 import java.io.IOException;
 
@@ -12,7 +12,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import de.dagere.nodeDiffDetector.data.MethodCall;
 import de.dagere.nodeDiffDetector.data.serialization.MethodCallDeserializer;
 
-public class TestChangedEntity {
+public class TestTheMethodCall {
 
    @Test
    public void testAlltogether() {
