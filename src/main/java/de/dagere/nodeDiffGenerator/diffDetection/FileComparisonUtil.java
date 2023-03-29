@@ -43,7 +43,6 @@ import de.dagere.nodeDiffGenerator.config.FolderConfig;
 import de.dagere.nodeDiffGenerator.data.MethodCall;
 import de.dagere.nodeDiffGenerator.sourceReading.SourceReadUtils;
 import de.dagere.peass.dependency.changesreading.ClazzChangeData;
-import de.dagere.peass.dependency.changesreading.ImportComparator;
 import de.dagere.peass.dependency.changesreading.JavaParserProvider;
 
 /**

@@ -1,4 +1,4 @@
-package de.dagere.peass.dependency.changesreading;
+package de.dagere.nodeDiffGenerator.diffDetection;
 
 import java.util.HashSet;
 import java.util.List;
@@ -10,7 +10,7 @@ public class ImportComparator {
    
    private final Set<ImportDeclaration> notInBothImport = new HashSet<>();
 
-   public ImportComparator(List<ImportDeclaration> imports1, List<ImportDeclaration> imports2) {
+   ImportComparator(List<ImportDeclaration> imports1, List<ImportDeclaration> imports2) {
       final Set<String> importSet1 = getImportNames(imports1);
       final Set<String> importSet2 = getImportNames(imports2);
       
@@ -28,7 +28,7 @@ public class ImportComparator {
       }
    }
 
-   public Set<String> getImportNames(List<ImportDeclaration> imports1) {
+   Set<String> getImportNames(List<ImportDeclaration> imports1) {
       final Set<String> importSet1 = new HashSet<>();
       for (ImportDeclaration imports : imports1) {
          importSet1.add(imports.getNameAsString());
@@ -36,7 +36,7 @@ public class ImportComparator {
       return importSet1;
    }
    
-   public Set<ImportDeclaration> getNotInBoth() {
+   Set<ImportDeclaration> getNotInBoth() {
       return notInBothImport;
    }
 }
