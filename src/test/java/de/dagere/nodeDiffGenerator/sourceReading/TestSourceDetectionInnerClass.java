@@ -12,8 +12,8 @@ import com.github.javaparser.ParseException;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
 
-import de.dagere.nodeDiffGenerator.data.MethodCall;
-import de.dagere.nodeDiffGenerator.sourceReading.SourceReadUtils;
+import de.dagere.nodeDiffDetector.data.MethodCall;
+import de.dagere.nodeDiffDetector.sourceReading.SourceReadUtils;
 import de.dagere.peass.dependency.changesreading.JavaParserProvider;
 
 public class TestSourceDetectionInnerClass {

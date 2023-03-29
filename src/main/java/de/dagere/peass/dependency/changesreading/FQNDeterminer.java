@@ -12,7 +12,7 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.ImportDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 
-import de.dagere.nodeDiffGenerator.sourceReading.SourceReadUtils;
+import de.dagere.nodeDiffDetector.sourceReading.SourceReadUtils;
 
 public class FQNDeterminer {
 

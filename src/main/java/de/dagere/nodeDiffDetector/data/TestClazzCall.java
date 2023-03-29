@@ -1,4 +1,4 @@
-package de.dagere.nodeDiffGenerator.data;
+package de.dagere.nodeDiffDetector.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;

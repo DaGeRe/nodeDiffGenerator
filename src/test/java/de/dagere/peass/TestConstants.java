@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 import org.mockito.Mockito;
 
-import de.dagere.nodeDiffGenerator.config.FolderConfig;
+import de.dagere.nodeDiffDetector.config.FolderConfig;
 
 public class TestConstants {
 

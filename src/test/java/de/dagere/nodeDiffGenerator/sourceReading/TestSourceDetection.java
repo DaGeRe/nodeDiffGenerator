@@ -15,7 +15,7 @@ import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.BodyDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 
-import de.dagere.nodeDiffGenerator.sourceReading.SourceReadUtils;
+import de.dagere.nodeDiffDetector.sourceReading.SourceReadUtils;
 import de.dagere.peass.TestConstants;
 import de.dagere.peass.dependency.changesreading.JavaParserProvider;
 

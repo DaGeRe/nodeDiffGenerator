@@ -32,8 +32,8 @@ import org.junit.jupiter.api.Test;
 
 import com.github.javaparser.ParseException;
 
-import de.dagere.nodeDiffGenerator.data.MethodCall;
-import de.dagere.nodeDiffGenerator.diffDetection.FileComparisonUtil;
+import de.dagere.nodeDiffDetector.data.MethodCall;
+import de.dagere.nodeDiffDetector.diffDetection.FileComparisonUtil;
 import de.dagere.peass.dependency.changesreading.ClazzChangeData;
 
 /**

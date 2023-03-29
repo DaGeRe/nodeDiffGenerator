@@ -1,4 +1,4 @@
-package de.dagere.nodeDiffGenerator.clazzFinding;
+package de.dagere.nodeDiffDetector.clazzFinding;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -18,9 +18,9 @@ import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
 
-import de.dagere.nodeDiffGenerator.config.FolderConfig;
-import de.dagere.nodeDiffGenerator.data.MethodCall;
-import de.dagere.nodeDiffGenerator.data.TestCase;
+import de.dagere.nodeDiffDetector.config.FolderConfig;
+import de.dagere.nodeDiffDetector.data.MethodCall;
+import de.dagere.nodeDiffDetector.data.TestCase;
 import de.dagere.peass.dependency.changesreading.JavaParserProvider;
 
 /**

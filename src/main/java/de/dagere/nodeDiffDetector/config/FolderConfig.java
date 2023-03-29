@@ -1,4 +1,4 @@
-package de.dagere.nodeDiffGenerator.config;
+package de.dagere.nodeDiffDetector.config;
 
 import java.util.List;
 

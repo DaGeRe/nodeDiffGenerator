@@ -1,4 +1,4 @@
-package de.dagere.nodeDiffGenerator.data;
+package de.dagere.nodeDiffDetector.data;
 
 public class MethodCallHelper {
 

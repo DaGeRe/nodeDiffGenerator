@@ -1,4 +1,4 @@
-package de.dagere.peass.dependency.changesreading;
+package de.dagere.nodeDiffDetector.diffDetection;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,9 +12,9 @@ import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.comments.Comment;
 
-import de.dagere.nodeDiffGenerator.clazzFinding.ClazzFinder;
-import de.dagere.nodeDiffGenerator.data.MethodCall;
-import de.dagere.nodeDiffGenerator.diffDetection.CommentRemover;
+import de.dagere.nodeDiffDetector.clazzFinding.ClazzFinder;
+import de.dagere.nodeDiffDetector.data.MethodCall;
+import de.dagere.peass.dependency.changesreading.JavaParserProvider;
 
 /**
  * This class tests whether comments can be removed; therefore, it contains some comments itself

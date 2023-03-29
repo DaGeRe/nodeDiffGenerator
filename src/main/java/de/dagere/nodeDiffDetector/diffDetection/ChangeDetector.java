@@ -1,4 +1,4 @@
-package de.dagere.nodeDiffGenerator.diffDetection;
+package de.dagere.nodeDiffDetector.diffDetection;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,10 +11,10 @@ import org.apache.logging.log4j.Logger;
 
 import com.github.javaparser.ParseException;
 
-import de.dagere.nodeDiffGenerator.clazzFinding.ClazzFileFinder;
-import de.dagere.nodeDiffGenerator.config.FolderConfig;
-import de.dagere.nodeDiffGenerator.config.SourceCodeFolders;
-import de.dagere.nodeDiffGenerator.data.MethodCall;
+import de.dagere.nodeDiffDetector.clazzFinding.ClazzFileFinder;
+import de.dagere.nodeDiffDetector.config.FolderConfig;
+import de.dagere.nodeDiffDetector.config.SourceCodeFolders;
+import de.dagere.nodeDiffDetector.data.MethodCall;
 import de.dagere.peass.dependency.changesreading.ClazzChangeData;
 
 public class ChangeDetector {

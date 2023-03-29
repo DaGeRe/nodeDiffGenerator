@@ -1,4 +1,4 @@
-package de.dagere.nodeDiffGenerator.diffDetection;
+package de.dagere.nodeDiffDetector.diffDetection;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,8 +19,8 @@ import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.stmt.Statement;
 
-import de.dagere.nodeDiffGenerator.clazzFinding.ClazzFinder;
-import de.dagere.nodeDiffGenerator.data.MethodCall;
+import de.dagere.nodeDiffDetector.clazzFinding.ClazzFinder;
+import de.dagere.nodeDiffDetector.data.MethodCall;
 import de.dagere.peass.dependency.changesreading.ClazzChangeData;
 import de.dagere.peass.dependency.changesreading.FQNDeterminer;
 

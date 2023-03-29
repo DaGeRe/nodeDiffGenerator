@@ -1,4 +1,4 @@
-package de.dagere.nodeDiffGenerator.diffDetection;
+package de.dagere.nodeDiffDetector.diffDetection;
 
 import java.util.Iterator;
 import java.util.LinkedList;

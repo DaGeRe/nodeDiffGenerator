@@ -1,4 +1,4 @@
-package de.dagere.nodeDiffGenerator.sourceReading;
+package de.dagere.nodeDiffDetector.sourceReading;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -18,7 +18,7 @@ import com.github.javaparser.ast.body.EnumDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.expr.ObjectCreationExpr;
 
-import de.dagere.nodeDiffGenerator.data.MethodCall;
+import de.dagere.nodeDiffDetector.data.MethodCall;
 import de.dagere.peass.dependency.traces.MethodReader;
 
 public class SourceReadUtils {

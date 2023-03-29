@@ -1,4 +1,4 @@
-package de.dagere.nodeDiffGenerator.diffDetection;
+package de.dagere.nodeDiffDetector.diffDetection;
 
 import java.util.HashSet;
 import java.util.List;

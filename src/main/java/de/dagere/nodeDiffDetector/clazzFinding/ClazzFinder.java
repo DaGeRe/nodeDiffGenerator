@@ -1,4 +1,4 @@
-package de.dagere.nodeDiffGenerator.clazzFinding;
+package de.dagere.nodeDiffDetector.clazzFinding;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -10,7 +10,7 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.EnumDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 
-import de.dagere.nodeDiffGenerator.data.MethodCall;
+import de.dagere.nodeDiffDetector.data.MethodCall;
 
 public class ClazzFinder {
    public static String getContainingClazz(final Node statement) {

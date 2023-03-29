@@ -1,4 +1,4 @@
-package de.dagere.nodeDiffGenerator.data;
+package de.dagere.nodeDiffDetector.data;
 
 import java.io.File;
 import java.io.Serializable;

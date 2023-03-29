@@ -1,12 +1,12 @@
-package de.dagere.nodeDiffGenerator.data.serialization;
+package de.dagere.nodeDiffDetector.data.serialization;
 
 import java.io.IOException;
 
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.KeyDeserializer;
 
-import de.dagere.nodeDiffGenerator.data.MethodCall;
-import de.dagere.nodeDiffGenerator.data.TestClazzCall;
+import de.dagere.nodeDiffDetector.data.MethodCall;
+import de.dagere.nodeDiffDetector.data.TestClazzCall;
 
 public class TestClazzCallKeyDeserializer extends KeyDeserializer {
 

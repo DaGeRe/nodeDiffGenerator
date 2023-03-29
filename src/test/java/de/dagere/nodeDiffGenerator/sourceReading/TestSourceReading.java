@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
 
-import de.dagere.nodeDiffGenerator.data.MethodCall;
-import de.dagere.nodeDiffGenerator.sourceReading.SourceReadUtils;
+import de.dagere.nodeDiffDetector.data.MethodCall;
+import de.dagere.nodeDiffDetector.sourceReading.SourceReadUtils;
 import de.dagere.peass.TestConstants;
 import de.dagere.peass.dependency.changesreading.JavaParserProvider;
 
