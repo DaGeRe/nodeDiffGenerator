@@ -42,4 +42,37 @@ public class TestFQNDeterminer {
       String fqnSecond = FQNDeterminer.getParameterFQN(unit, "Second");
       Assert.assertEquals("de.dagere.Second", fqnSecond);
    }
+   
+   @Test
+   public void testSimpleType() throws FileNotFoundException {
+      File file = new File(SOURCE, "src/main/java/de/dagere/TestMe1.java");
+      CompilationUnit unit = JavaParserProvider.parse(file);
+      String fqn = FQNDeterminer.getParameterFQN(unit, "int");
+      Assert.assertEquals("int", fqn);
+
+      String fqn2 = FQNDeterminer.getParameterFQN(unit, "double");
+      Assert.assertEquals("double", fqn2);
+      
+      String simpleTypeFQNArray = FQNDeterminer.getParameterFQN(unit, "double[]");
+      Assert.assertEquals("double[]", simpleTypeFQNArray);
+   }
+   
+   @Test
+   public void testJavaLangClass() throws FileNotFoundException {
+      File file = new File(SOURCE, "src/main/java/de/dagere/TestMe1.java");
+      CompilationUnit unit = JavaParserProvider.parse(file);
+      String fqn = FQNDeterminer.getParameterFQN(unit, "Object");
+      Assert.assertEquals("java.lang.Object", fqn);
+
+      String fqn2 = FQNDeterminer.getParameterFQN(unit, "String");
+      Assert.assertEquals("java.lang.String", fqn2);
+   }
+   
+   @Test
+   public void testJavaLangGenericClass() throws FileNotFoundException {
+      File file = new File(SOURCE, "src/main/java/de/dagere/TestMe1.java");
+      CompilationUnit unit = JavaParserProvider.parse(file);
+      String fqn = FQNDeterminer.getParameterFQN(unit, "Class");
+      Assert.assertEquals("java.lang.Class", fqn);
+   }
 }
