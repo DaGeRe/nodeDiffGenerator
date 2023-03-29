@@ -83,4 +83,16 @@ public class TestFQNDeterminer {
       String fqn = FQNDeterminer.getParameterFQN(unit, "TestM2");
       Assert.assertEquals("de.dagere.TestM2", fqn);
    }
+   
+   @Test
+   public void testImportedClass() throws FileNotFoundException {
+      
+      File dependencyReaderFile = new File(SOURCE, "src/main/java/de/dagere/ImportTestExample.java");
+      CompilationUnit unit = JavaParserProvider.parse(dependencyReaderFile);
+      String fqn = FQNDeterminer.getParameterFQN(unit, "TestCase");
+      Assert.assertEquals("junit.framework.TestCase", fqn);
+
+      String fqn2 = FQNDeterminer.getParameterFQN(unit, "CommandLine");
+      Assert.assertEquals("picocli.CommandLine", fqn2);
+   }
 }
