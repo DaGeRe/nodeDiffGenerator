@@ -1,4 +1,4 @@
-package de.dagere.nodeDiffGenerator.sourceReading;
+package de.dagere.nodeDiffDetector.sourceReading;
 
 import java.io.File;
 import java.io.IOException;

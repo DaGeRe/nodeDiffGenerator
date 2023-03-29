@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import de.dagere.nodeDiffDetector.clazzFinding.ClazzFileFinder;
 import de.dagere.nodeDiffDetector.data.MethodCall;
 import de.dagere.nodeDiffDetector.diffDetection.FileComparisonUtil;
-import de.dagere.peass.TestConstants;
+import de.dagere.nodeDiffDetector.testUtils.TestConstants;
 
 public class TestClazzFileFinder {
    

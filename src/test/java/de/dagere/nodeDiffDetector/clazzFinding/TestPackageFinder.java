@@ -1,17 +1,14 @@
-package de.dagere.peass;
+package de.dagere.nodeDiffDetector.clazzFinding;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.List;
 
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsIterableContaining;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
-import de.dagere.nodeDiffDetector.clazzFinding.ClazzFileFinder;
-import de.dagere.nodeDiffDetector.config.FolderConfig;
+import de.dagere.nodeDiffDetector.testUtils.TestConstants;
 
 public class TestPackageFinder {
 

@@ -1,4 +1,4 @@
-package de.dagere.peass;
+package de.dagere.nodeDiffDetector.testUtils;
 
 import java.io.File;
 import java.util.Arrays;

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import com.github.javaparser.ast.CompilationUnit;
 
-import de.dagere.peass.TestConstants;
+import de.dagere.nodeDiffDetector.testUtils.TestConstants;
 
 public class TestFQNDeterminer {
 
