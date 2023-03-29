@@ -15,7 +15,7 @@
  *     along with PerAn.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de;
+package de.dagere;
 
 import junit.framework.TestCase;
 
