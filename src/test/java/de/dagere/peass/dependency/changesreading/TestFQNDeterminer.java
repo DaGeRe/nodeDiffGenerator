@@ -75,4 +75,12 @@ public class TestFQNDeterminer {
       String fqn = FQNDeterminer.getParameterFQN(unit, "Class");
       Assert.assertEquals("java.lang.Class", fqn);
    }
+   
+   @Test
+   public void testPackageClass() throws FileNotFoundException {
+      File file = new File(SOURCE, "src/main/java/de/dagere/TestMe1.java");
+      CompilationUnit unit = JavaParserProvider.parse(file);
+      String fqn = FQNDeterminer.getParameterFQN(unit, "TestM2");
+      Assert.assertEquals("de.dagere.TestM2", fqn);
+   }
 }
