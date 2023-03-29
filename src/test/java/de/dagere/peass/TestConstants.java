@@ -14,5 +14,6 @@ public class TestConstants {
    public static final FolderConfig DEFAULT_FOLDERS = Mockito.mock(FolderConfig.class);
    static {
       Mockito.when(DEFAULT_FOLDERS.getClazzFolders()).thenReturn(Arrays.asList(new String[] { "src/main/java", "src/java" }));
+      Mockito.when(DEFAULT_FOLDERS.getAllClazzFolders()).thenReturn(Arrays.asList(new String[] { "src/main/java", "src/java" }));
    }
 }
