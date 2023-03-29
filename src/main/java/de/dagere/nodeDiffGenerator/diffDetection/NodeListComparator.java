@@ -1,4 +1,4 @@
-package de.dagere.peass.dependency.changesreading;
+package de.dagere.nodeDiffGenerator.diffDetection;
 
 import java.util.Iterator;
 import java.util.List;
@@ -30,8 +30,6 @@ public class NodeListComparator {
       last2 = node2iterator.next();
    }
 
-
-
    /**
     * Helps getting the changes of a node list of unequal length, e.g. if old version has 5 methods and new 6, it tells whether the old 5 methods, if they are still there and in
     * the same order, are changed.
@@ -40,7 +38,7 @@ public class NodeListComparator {
     * @param childs1
     * @param childs2
     */
-   public void compareUnequalNodeList() {
+   void compareUnequalNodeList() {
       while (node1iterator.hasNext() && node2iterator.hasNext()) {
          child1 = node1iterator.next();
          child2 = node2iterator.next();
@@ -71,9 +69,7 @@ public class NodeListComparator {
       }
    }
 
-
-
-   public void handleMethodOrderChange() {
+   void handleMethodOrderChange() {
       final MethodDeclaration md1 = (MethodDeclaration) child1;
       final MethodDeclaration md2 = (MethodDeclaration) child2;
       final MethodDeclaration last1Method = (MethodDeclaration) last1;

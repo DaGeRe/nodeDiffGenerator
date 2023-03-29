@@ -33,8 +33,8 @@ import org.junit.jupiter.api.Test;
 import com.github.javaparser.ParseException;
 
 import de.dagere.nodeDiffGenerator.data.MethodCall;
+import de.dagere.nodeDiffGenerator.diffDetection.FileComparisonUtil;
 import de.dagere.peass.dependency.changesreading.ClazzChangeData;
-import de.dagere.peass.dependency.changesreading.FileComparisonUtil;
 
 /**
  * Tests whether the class comparison works for the given files, i.e. returns whether the class and its method have changed correct.

@@ -1,4 +1,4 @@
-package de.dagere.peass.dependency.changesreading;
+package de.dagere.nodeDiffGenerator.diffDetection;
 
 import java.util.Iterator;
 import java.util.LinkedList;

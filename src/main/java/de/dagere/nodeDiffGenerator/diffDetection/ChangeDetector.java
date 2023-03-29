@@ -1,4 +1,4 @@
-package de.dagere.peass.dependency;
+package de.dagere.nodeDiffGenerator.diffDetection;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,7 +16,6 @@ import de.dagere.nodeDiffGenerator.config.FolderConfig;
 import de.dagere.nodeDiffGenerator.config.SourceCodeFolders;
 import de.dagere.nodeDiffGenerator.data.MethodCall;
 import de.dagere.peass.dependency.changesreading.ClazzChangeData;
-import de.dagere.peass.dependency.changesreading.FileComparisonUtil;
 
 public class ChangeDetector {
    

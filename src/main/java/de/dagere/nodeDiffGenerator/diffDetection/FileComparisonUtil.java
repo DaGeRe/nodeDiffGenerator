@@ -14,7 +14,7 @@
  *     You should have received a copy of the GNU General Public License
  *     along with PerAn.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.dagere.peass.dependency.changesreading;
+package de.dagere.nodeDiffGenerator.diffDetection;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -42,6 +42,10 @@ import de.dagere.nodeDiffGenerator.clazzFinding.ClazzFileFinder;
 import de.dagere.nodeDiffGenerator.config.FolderConfig;
 import de.dagere.nodeDiffGenerator.data.MethodCall;
 import de.dagere.nodeDiffGenerator.sourceReading.SourceReadUtils;
+import de.dagere.peass.dependency.changesreading.ChangeAdder;
+import de.dagere.peass.dependency.changesreading.ClazzChangeData;
+import de.dagere.peass.dependency.changesreading.ImportComparator;
+import de.dagere.peass.dependency.changesreading.JavaParserProvider;
 
 /**
  * Helps to compare whether two versions of a file may have changed performance (and whether this change is for the use of the whole file or only some methods).
@@ -67,7 +71,7 @@ public final class FileComparisonUtil {
     * @param node2 Second node for comparison
     * @return Eventually empty List of changed Nodes
     */
-   public static List<Node> comparePairwise(final Node node1, final Node node2) {
+   static List<Node> comparePairwise(final Node node1, final Node node2) {
       final List<Node> changes = new LinkedList<>();
 
       final List<Node> childs1 = cleanUnneccessary(node1.getChildNodes());
