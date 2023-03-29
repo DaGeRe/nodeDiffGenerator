@@ -19,6 +19,7 @@ import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.stmt.Statement;
 
+import de.dagere.nodeDiffGenerator.clazzFinding.ClazzFinder;
 import de.dagere.nodeDiffGenerator.data.MethodCall;
 
 public class ChangeAdder {

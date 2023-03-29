@@ -12,6 +12,7 @@ import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.comments.Comment;
 
+import de.dagere.nodeDiffGenerator.clazzFinding.ClazzFinder;
 import de.dagere.nodeDiffGenerator.data.MethodCall;
 
 /**

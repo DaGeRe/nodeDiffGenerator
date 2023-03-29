@@ -38,10 +38,10 @@ import com.github.javaparser.ast.comments.JavadocComment;
 import com.github.javaparser.ast.comments.LineComment;
 import com.github.javaparser.ast.stmt.BlockStmt;
 
+import de.dagere.nodeDiffGenerator.clazzFinding.ClazzFileFinder;
 import de.dagere.nodeDiffGenerator.config.FolderConfig;
 import de.dagere.nodeDiffGenerator.data.MethodCall;
 import de.dagere.nodeDiffGenerator.sourceReading.SourceReadUtils;
-import de.dagere.peass.dependency.ClazzFileFinder;
 
 /**
  * Helps to compare whether two versions of a file may have changed performance (and whether this change is for the use of the whole file or only some methods).

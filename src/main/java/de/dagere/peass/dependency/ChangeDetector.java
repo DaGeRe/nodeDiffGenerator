@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.github.javaparser.ParseException;
 
+import de.dagere.nodeDiffGenerator.clazzFinding.ClazzFileFinder;
 import de.dagere.nodeDiffGenerator.config.FolderConfig;
 import de.dagere.nodeDiffGenerator.config.SourceCodeFolders;
 import de.dagere.nodeDiffGenerator.data.MethodCall;

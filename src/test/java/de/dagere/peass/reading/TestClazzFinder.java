@@ -9,8 +9,8 @@ import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.body.TypeDeclaration;
 
+import de.dagere.nodeDiffGenerator.clazzFinding.ClazzFinder;
 import de.dagere.nodeDiffGenerator.data.MethodCall;
-import de.dagere.peass.dependency.changesreading.ClazzFinder;
 
 public class TestClazzFinder {
    

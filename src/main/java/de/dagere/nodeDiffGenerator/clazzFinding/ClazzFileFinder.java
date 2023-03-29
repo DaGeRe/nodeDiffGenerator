@@ -1,4 +1,4 @@
-package de.dagere.peass.dependency;
+package de.dagere.nodeDiffGenerator.clazzFinding;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -21,7 +21,6 @@ import com.github.javaparser.ast.Node;
 import de.dagere.nodeDiffGenerator.config.FolderConfig;
 import de.dagere.nodeDiffGenerator.data.MethodCall;
 import de.dagere.nodeDiffGenerator.data.TestCase;
-import de.dagere.peass.dependency.changesreading.ClazzFinder;
 import de.dagere.peass.dependency.changesreading.JavaParserProvider;
 
 /**

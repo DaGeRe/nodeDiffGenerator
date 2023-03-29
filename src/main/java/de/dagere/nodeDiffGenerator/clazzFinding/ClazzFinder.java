@@ -1,4 +1,4 @@
-package de.dagere.peass.dependency.changesreading;
+package de.dagere.nodeDiffGenerator.clazzFinding;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -52,7 +52,7 @@ public class ClazzFinder {
       return declaration;
    }
    
-   public static List<String> getEntities(final Node node, final String parent, final String clazzSeparator) {
+   static List<String> getEntities(final Node node, final String parent, final String clazzSeparator) {
       final List<String> clazzes = new LinkedList<>();
       if (node instanceof ClassOrInterfaceDeclaration) {
          addClazzesOrInterfaces(node, parent, clazzSeparator, clazzes);
