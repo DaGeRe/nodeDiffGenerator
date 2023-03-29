@@ -1,4 +1,4 @@
-package de.dagere.peass.dependency.changesreading;
+package de.dagere.nodeDiffGenerator.diffDetection;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,12 +21,14 @@ import com.github.javaparser.ast.stmt.Statement;
 
 import de.dagere.nodeDiffGenerator.clazzFinding.ClazzFinder;
 import de.dagere.nodeDiffGenerator.data.MethodCall;
+import de.dagere.peass.dependency.changesreading.ClazzChangeData;
+import de.dagere.peass.dependency.changesreading.FQNDeterminer;
 
 public class ChangeAdder {
    
    private static final Logger LOG = LogManager.getLogger(ChangeAdder.class);
    
-   public static void addChange(final ClazzChangeData changedata, final Node node, final CompilationUnit unit) {
+   static void addChange(final ClazzChangeData changedata, final Node node, final CompilationUnit unit) {
       if (node instanceof Statement || node instanceof Expression) {
          handleStatement(unit, changedata, node);
       } else if (node instanceof ClassOrInterfaceDeclaration) {
@@ -38,7 +40,7 @@ public class ChangeAdder {
       }
    }
 
-   public static void handleClassChange(final ClazzChangeData changedata, final ClassOrInterfaceDeclaration node) {
+   static void handleClassChange(final ClazzChangeData changedata, final ClassOrInterfaceDeclaration node) {
       String clazz = ClazzFinder.getContainingClazz(node);
       if (!clazz.isEmpty()) {
          changedata.addClazzChange(clazz);
@@ -46,7 +48,7 @@ public class ChangeAdder {
       }
    }
    
-   public static void handleUnknownChange(final ClazzChangeData changedata, final CompilationUnit cu) {
+   static void handleUnknownChange(final ClazzChangeData changedata, final CompilationUnit cu) {
       List<MethodCall> entities = ClazzFinder.getClazzEntities(cu);
       for (MethodCall entity : entities) {
          changedata.addClazzChange(entity);
