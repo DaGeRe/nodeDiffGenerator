@@ -2,7 +2,6 @@ package de.dagere.peass;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.hamcrest.MatcherAssert;
@@ -18,10 +17,7 @@ public class TestPackageFinder {
 
    @Test
    public void testDependencyModule() {
-      FolderConfig config = Mockito.mock(FolderConfig.class);
-      Mockito.when(config.getClazzFolders()).thenReturn(Arrays.asList(new String[] {"src/main/java", "src/java"}));
-      
-      final List<String> lowestPackage = new ClazzFileFinder(config).getClasses(new File("."));
+      final List<String> lowestPackage = new ClazzFileFinder(TestConstants.DEFAULT_FOLDERS).getClasses(new File("."));
       System.out.println(lowestPackage);
       MatcherAssert.assertThat(lowestPackage, IsIterableContaining.hasItem("de.dagere.peass.nodeDiffGenerator.config.FolderConfig"));
       MatcherAssert.assertThat(lowestPackage, Matchers.not(IsIterableContaining.hasItem("de.dagere.peass.nodeDiffGenerator.config.FolderConfig.FolderConfig")));
