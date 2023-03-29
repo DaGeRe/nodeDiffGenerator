@@ -21,7 +21,7 @@ import com.github.javaparser.ast.Node;
 import de.dagere.nodeDiffDetector.config.FolderConfig;
 import de.dagere.nodeDiffDetector.data.MethodCall;
 import de.dagere.nodeDiffDetector.data.TestCase;
-import de.dagere.peass.dependency.changesreading.JavaParserProvider;
+import de.dagere.nodeDiffDetector.utils.JavaParserProvider;
 
 /**
  * Searches for all classes in a maven project. Used for instrumeting them.

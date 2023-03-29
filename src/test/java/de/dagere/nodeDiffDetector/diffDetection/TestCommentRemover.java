@@ -14,7 +14,7 @@ import com.github.javaparser.ast.comments.Comment;
 
 import de.dagere.nodeDiffDetector.clazzFinding.ClazzFinder;
 import de.dagere.nodeDiffDetector.data.MethodCall;
-import de.dagere.peass.dependency.changesreading.JavaParserProvider;
+import de.dagere.nodeDiffDetector.utils.JavaParserProvider;
 
 /**
  * This class tests whether comments can be removed; therefore, it contains some comments itself

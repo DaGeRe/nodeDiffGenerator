@@ -19,7 +19,6 @@ import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.expr.ObjectCreationExpr;
 
 import de.dagere.nodeDiffDetector.data.MethodCall;
-import de.dagere.peass.dependency.traces.MethodReader;
 
 public class SourceReadUtils {
    

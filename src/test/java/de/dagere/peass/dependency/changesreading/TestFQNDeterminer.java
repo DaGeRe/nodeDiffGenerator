@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import com.github.javaparser.ast.CompilationUnit;
 
 import de.dagere.nodeDiffDetector.testUtils.TestConstants;
+import de.dagere.nodeDiffDetector.utils.JavaParserProvider;
 
 public class TestFQNDeterminer {
 

@@ -10,9 +10,8 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
 
 import de.dagere.nodeDiffDetector.data.MethodCall;
-import de.dagere.nodeDiffDetector.sourceReading.SourceReadUtils;
 import de.dagere.nodeDiffDetector.testUtils.TestConstants;
-import de.dagere.peass.dependency.changesreading.JavaParserProvider;
+import de.dagere.nodeDiffDetector.utils.JavaParserProvider;
 
 public class TestSourceReading {
 

@@ -114,7 +114,7 @@ public class ParameterComparator {
    }
 
    private boolean checkParameter(final String traceParameterTypes[], final int parameterIndex, final Type type, final boolean varArgAllowed) {
-      final String simpleTraceParameterType = MethodReader.getSimpleType(traceParameterTypes[parameterIndex]);
+      final String simpleTraceParameterType = getSimpleType(traceParameterTypes[parameterIndex]);
       final String typeString = type instanceof ClassOrInterfaceType ? ((ClassOrInterfaceType) type).getNameAsString() : type.toString();
       // ClassOrInterfaceType
       if (typeString.equals(simpleTraceParameterType)) {
@@ -146,5 +146,32 @@ public class ParameterComparator {
          }
       }
       return isTypeParameter;
+   }
+   
+   /**
+    * Takes a parameter type (e.g. my.packageDeclaration.MyClass<GenericStuff>) and returns the simple type (e.g. MyClass). Generics can not be considered
+    * since they are erased at runtime and therefore not present in traces. 
+    * 
+    * In general, it would be nice to use FQNs instead of simple types. This would require:
+    *    1. Parsing the CompilationUnit for a type declaration (which would mean that the FQN would be package + name by hierarchy in CompilationUnit).
+    *    2. Parsing the Imports (can be obtained from the CompilationUnit)
+    *    3. Parsing the Declarations in the Package (would require to parse all Files in the package-folder)
+    *    4. If none of this applies: package can assumed to be java.lang
+    *    
+    * Currently, this is not implemented. This results in equal simple class names (e.g. my.package1.MyClass and my.package2.MyClass) to be considered equal.
+    * @param traceParameterType
+    * @return
+    */
+   public static String getSimpleType(final String traceParameterType) {
+      LOG.trace("Getting simple type of {}", traceParameterType); 
+      final String result;
+      if (traceParameterType.contains("<")) {
+         String withoutGenerics = traceParameterType.substring(0, traceParameterType.indexOf("<"));
+         result = withoutGenerics.substring(withoutGenerics.lastIndexOf('.') + 1);
+      } else {
+         result = traceParameterType.substring(traceParameterType.lastIndexOf('.') + 1);
+      }
+      LOG.trace("Simple type: {}", result); 
+      return result;
    }
 }

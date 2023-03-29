@@ -15,9 +15,8 @@ import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.BodyDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 
-import de.dagere.nodeDiffDetector.sourceReading.SourceReadUtils;
 import de.dagere.nodeDiffDetector.testUtils.TestConstants;
-import de.dagere.peass.dependency.changesreading.JavaParserProvider;
+import de.dagere.nodeDiffDetector.utils.JavaParserProvider;
 
 public class TestSourceDetection {
    public static final File SOURCE = new File(TestConstants.TEST_RESOURCES, "detection");
