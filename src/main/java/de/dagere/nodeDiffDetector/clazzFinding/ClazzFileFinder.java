@@ -21,6 +21,7 @@ import com.github.javaparser.ast.Node;
 import de.dagere.nodeDiffDetector.config.FolderConfig;
 import de.dagere.nodeDiffDetector.data.MethodCall;
 import de.dagere.nodeDiffDetector.data.TestCase;
+import de.dagere.nodeDiffDetector.utils.Endings;
 import de.dagere.nodeDiffDetector.utils.JavaParserProvider;
 
 /**
@@ -98,9 +99,25 @@ public class ClazzFileFinder {
     * @param folder Main folder that should be searched
     */
    private static void addClazzes(final List<String> clazzes, final File folder) {
-      Collection<File> javaFiles = FileUtils.listFiles(folder, new WildcardFileFilter("*.java"), TrueFileFilter.INSTANCE);
+      addJavaClasses(clazzes, folder);
+      addScalaClasses(clazzes, folder);
+   }
+
+   private static void addScalaClasses(final List<String> clazzes, final File folder) {
+      WildcardFileFilter scalaFilter = new WildcardFileFilter("*" + Endings.SCALA);
+      Collection<File> scalaFiles = FileUtils.listFiles(folder, scalaFilter, TrueFileFilter.INSTANCE);
+      for (final File clazzFile : scalaFiles) {
+         final String clazz = getClazz(folder, clazzFile, Endings.SCALA);
+         //TODO Parse for classes in file, instead of simply adding the file name
+         clazzes.add(clazz);
+      }
+   }
+
+   private static void addJavaClasses(final List<String> clazzes, final File folder) {
+      WildcardFileFilter fileFilter = new WildcardFileFilter("*" + Endings.JAVA);
+      Collection<File> javaFiles = FileUtils.listFiles(folder, fileFilter, TrueFileFilter.INSTANCE);
       for (final File clazzFile : javaFiles) {
-         final String clazz = getClazz(folder, clazzFile);
+         final String clazz = getClazz(folder, clazzFile, Endings.JAVA);
          final String packageName = clazz.lastIndexOf('.') != -1 ? clazz.substring(0, clazz.lastIndexOf('.')) : "";
 
          try {
@@ -118,12 +135,12 @@ public class ClazzFileFinder {
       }
    }
 
-   private static String getClazz(final File folder, final File clazzFile) {
+   private static String getClazz(final File folder, final File clazzFile, String ending) {
       try {
          String path = clazzFile.getCanonicalPath();
          String projectFolderPrefix = folder.getCanonicalPath() + File.separator;
          path = path.replace(projectFolderPrefix, "");
-         path = path.substring(0, path.length() - 5);
+         path = path.substring(0, path.length() - ending.length());
          final String clazz = path.replace(File.separator, ".");
          return clazz;
       } catch (IOException e) {
@@ -166,7 +183,7 @@ public class ClazzFileFinder {
       }
       LOG.trace("Searching: {} in {}", entity, moduleOrProjectFolder.getAbsolutePath());
       final String clazzName = getOuterClass(entity.getClazz());
-      final String clazzFileName = clazzName.endsWith(".java") ? clazzName : clazzName.replace('.', File.separatorChar) + ".java";
+      final String clazzFileName = clazzName.endsWith(Endings.JAVA) ? clazzName : clazzName.replace('.', File.separatorChar) + Endings.JAVA;
       final File naturalCandidate = new File(moduleOrProjectFolder, clazzFileName);
       File potentialFile = findFile(moduleOrProjectFolder, clazzFileName, naturalCandidate);
       if (potentialFile == null && entity.getModule() != null && !entity.getModule().equals("")) {
@@ -212,7 +229,7 @@ public class ClazzFileFinder {
             String clazzName = pureName.substring(pureName.lastIndexOf(File.separator) + 1);
             File packageFolder = new File(sourceParentFolder, potentialFolder + File.separator + packageName);
             if (packageFolder.exists()) {
-               for (File containingFileCandidate : packageFolder.listFiles((FileFilter) new WildcardFileFilter("*.java"))) {
+               for (File containingFileCandidate : packageFolder.listFiles((FileFilter) new WildcardFileFilter("*" + Endings.JAVA))) {
                   try {
                      if (containingFileCandidate.isFile()) {
                         CompilationUnit cu = JavaParserProvider.parse(containingFileCandidate);
