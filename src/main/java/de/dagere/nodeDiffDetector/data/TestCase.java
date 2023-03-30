@@ -20,7 +20,7 @@ public abstract class TestCase implements Comparable<TestCase>, Serializable {
    protected final String clazz;
 
    protected TestCase(String clazz, String module) {
-      if (clazz.contains(File.separator)) {
+      if (clazz.contains(File.separator) || clazz.contains("/")) {
          throw new RuntimeException("Testcase " + clazz + " should be full qualified name, not path!");
       }
       if (clazz.contains(MethodCall.METHOD_SEPARATOR)) {
