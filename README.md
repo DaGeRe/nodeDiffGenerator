@@ -1,7 +1,7 @@
 nodeDiffDetector
 ===================
 
-This project detects differences between two commits of a project in order to spot where potential performance changes might arise and be rooted. The main use case if the performance analysis using Peass (https://github.com/DaGeRe/peass).
+This project detects differences between two commits of a project at call tree node (=method) level. This is done in order to spot where potential performance changes might arise and be rooted. The main use case if the performance analysis using Peass (https://github.com/DaGeRe/peass).
 
 The main methods provided to other projects are:
 - ChangeDetector.compareClazz
