@@ -16,8 +16,8 @@ public class TestPackageFinder {
    public void testDependencyModule() {
       final List<String> lowestPackage = new ClazzFileFinder(TestConstants.DEFAULT_FOLDERS).getClasses(new File("."));
       System.out.println(lowestPackage);
-      MatcherAssert.assertThat(lowestPackage, IsIterableContaining.hasItem("de.dagere.peass.nodeDiffGenerator.config.FolderConfig"));
-      MatcherAssert.assertThat(lowestPackage, Matchers.not(IsIterableContaining.hasItem("de.dagere.peass.nodeDiffGenerator.config.FolderConfig.FolderConfig")));
-      MatcherAssert.assertThat(lowestPackage, IsIterableContaining.hasItem("de.dagere.peass.nodeDiffGenerator.config.SourceCodeFolders"));
+      MatcherAssert.assertThat(lowestPackage, IsIterableContaining.hasItem("de.dagere.nodeDiffDetector.config.FolderConfig"));
+      MatcherAssert.assertThat(lowestPackage, Matchers.not(IsIterableContaining.hasItem("de.dagere.nodeDiffDetector.config.FolderConfig.FolderConfig")));
+      MatcherAssert.assertThat(lowestPackage, IsIterableContaining.hasItem("de.dagere.nodeDiffDetector.config.SourceCodeFolders"));
    }
 }
