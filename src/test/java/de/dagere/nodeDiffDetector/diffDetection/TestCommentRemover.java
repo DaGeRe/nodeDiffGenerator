@@ -28,11 +28,11 @@ public class TestCommentRemover {
     */
    @Test
    public void removeComments() throws FileNotFoundException {
-      File testFile = new File("src/test/java/de/dagere/peass/dependency/changesreading/TestCommentRemover.java");
+      File testFile = new File("src/test/java/de/dagere/nodeDiffDetector/diffDetection/TestCommentRemover.java");
       CompilationUnit unit = JavaParserProvider.parse(testFile);
 
       // This comment should be removed
-      TypeDeclaration<?> clazz = ClazzFinder.findClazz(new MethodCall("de.dagere.peass.dependency.changesreading.TestCommentRemover"), unit.getChildNodes());
+      TypeDeclaration<?> clazz = ClazzFinder.findClazz(new MethodCall("de.dagere.nodeDiffDetector.diffDetection.TestCommentRemover"), unit.getChildNodes());
       new CommentRemover(clazz);
 
       Assert.assertFalse(clazz.getComment().isPresent());
