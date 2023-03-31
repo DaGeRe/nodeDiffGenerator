@@ -6,6 +6,7 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>nodeDiffDetector</name>
   <description>Detects the difference between two commits of a software by parsing the code</description>
+  <url>https://github.com/DaGeRe/nodeDiffDetector/</url>
 
   <build>
     <plugins>
