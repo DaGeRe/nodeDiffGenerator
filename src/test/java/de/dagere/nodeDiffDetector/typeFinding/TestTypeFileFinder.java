@@ -13,6 +13,7 @@ import org.mockito.Mockito;
 
 import de.dagere.nodeDiffDetector.config.FolderConfig;
 import de.dagere.nodeDiffDetector.data.MethodCall;
+import de.dagere.nodeDiffDetector.data.Type;
 import de.dagere.nodeDiffDetector.sourceReading.MethodReader;
 import de.dagere.nodeDiffDetector.testUtils.TestConstants;
 import de.dagere.nodeDiffDetector.typeFinding.TypeFileFinder;
@@ -52,16 +53,16 @@ public class TestTypeFileFinder {
    
    @Test
    public void testGetSourceFile() throws FileNotFoundException {
-      File sourceFileClass = new TypeFileFinder(TestConstants.DEFAULT_FOLDERS).getSourceFile(SOURCE, new MethodCall("de.dagere.LocalClass"));
+      File sourceFileClass = new TypeFileFinder(TestConstants.DEFAULT_FOLDERS).getSourceFile(SOURCE, new Type("de.dagere.LocalClass", ""));
       Assert.assertNotNull(sourceFileClass);
       
-      File sourceFileEnum = new TypeFileFinder(TestConstants.DEFAULT_FOLDERS).getSourceFile(SOURCE, new MethodCall("de.dagere.LocalEnum"));
+      File sourceFileEnum = new TypeFileFinder(TestConstants.DEFAULT_FOLDERS).getSourceFile(SOURCE, new Type("de.dagere.LocalEnum", ""));
       Assert.assertNotNull(sourceFileEnum);
       
-      File sourceFileInterface = new TypeFileFinder(TestConstants.DEFAULT_FOLDERS).getSourceFile(SOURCE, new MethodCall("de.dagere.LocalInterface"));
+      File sourceFileInterface = new TypeFileFinder(TestConstants.DEFAULT_FOLDERS).getSourceFile(SOURCE, new Type("de.dagere.LocalInterface", ""));
       Assert.assertNotNull(sourceFileInterface);
       
-      MethodCall exampleEntity = new MethodCall("de.dagere.LocalClass#myMethod(int)");
+      MethodCall exampleEntity = MethodCall.createMethodCallFromString("de.dagere.LocalClass#myMethod(int)");
       String text = MethodReader.getMethodSource(SOURCE, exampleEntity, TestConstants.DEFAULT_FOLDERS);
       MatcherAssert.assertThat(text, Matchers.containsString("this.i = i;"));
    }

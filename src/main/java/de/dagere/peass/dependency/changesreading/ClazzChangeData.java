@@ -28,6 +28,7 @@ import org.apache.logging.log4j.Logger;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.dagere.nodeDiffDetector.data.MethodCall;
+import de.dagere.nodeDiffDetector.data.Type;
 
 /**
  * Represents the relevant data of changes between two versions, i.e. whether there was a change, whether the change only affected methods, and if so, which methods where affected.
@@ -41,21 +42,21 @@ public class ClazzChangeData {
    private boolean isChange = false;
    private boolean isOnlyMethodChange = true;
    private final Map<String, Set<String>> changedMethods = new HashMap<>();
-   private final Set<MethodCall> importChanges = new HashSet<>();
-   private MethodCall containingFile;
+   private final Set<Type> importChanges = new HashSet<>();
+   private Type containingType;
 
-   public ClazzChangeData(final MethodCall containingFile) {
-      this.containingFile = containingFile;
+   public ClazzChangeData(final Type containingFile) {
+      this.containingType = containingFile;
    }
 
-   public ClazzChangeData(final MethodCall containingFile, final boolean isOnlyMethodChange) {
-      this.containingFile = containingFile;
+   public ClazzChangeData(final Type containingFile, final boolean isOnlyMethodChange) {
+      this.containingType = containingFile;
       changedMethods.put(containingFile.getSimpleClazzName(), null);
       this.isOnlyMethodChange = isOnlyMethodChange;
    }
 
    public ClazzChangeData(final String clazz, final boolean isOnlyMethodChange) {
-      this(new MethodCall(clazz, ""), isOnlyMethodChange);
+      this(new Type(clazz, ""), isOnlyMethodChange);
       if (clazz.contains(MethodCall.CLAZZ_SEPARATOR)) {
          throw new RuntimeException("Class " + clazz + " should not contain module separator; use ChangedEntity constructor instead!");
       }
@@ -63,7 +64,7 @@ public class ClazzChangeData {
 
    public ClazzChangeData(final String clazz, final String method) {
       addChange(clazz.substring(clazz.lastIndexOf('.') + 1), method);
-      containingFile = new MethodCall(clazz, "");
+      containingType = new Type(clazz, "");
       
       if (clazz.contains(MethodCall.CLAZZ_SEPARATOR)) {
          throw new RuntimeException("Class " + clazz + " should not contain module separator; use ChangedEntity constructor instead!");
@@ -126,22 +127,22 @@ public class ClazzChangeData {
       isOnlyMethodChange = false;
    }
 
-   public void addClazzChange(final MethodCall clazz) {
+   public void addClazzChange(final Type clazz) {
       addClazzChange(clazz.getSimpleClazzName());
    }
 
    @JsonIgnore
-   public Set<MethodCall> getUniqueChanges() {
-      Set<MethodCall> entities = new HashSet<>();
+   public Set<Type> getUniqueChanges() {
+      Set<Type> entities = new HashSet<>();
       for (Map.Entry<String, Set<String>> change : changedMethods.entrySet()) {
          String fullQualifiedClassname = getFQN(change.getKey());
          if (isOnlyMethodChange) {
             for (String method : change.getValue()) {
-               MethodCall entitity = new MethodCall(fullQualifiedClassname, containingFile.getModule(), method);
+               MethodCall entitity = new MethodCall(fullQualifiedClassname, containingType.getModule(), method);
                entities.add(entitity);
             }
          } else {
-            MethodCall entitity = new MethodCall(fullQualifiedClassname, containingFile.getModule());
+            Type entitity = new Type(fullQualifiedClassname, containingType.getModule());
             entities.add(entitity);
          }
       }
@@ -149,25 +150,25 @@ public class ClazzChangeData {
    }
 
    @JsonIgnore
-   public Set<MethodCall> getChanges() {
-      Set<MethodCall> entities = new HashSet<>();
+   public Set<Type> getChanges() {
+      Set<Type> entities = new HashSet<>();
       for (Map.Entry<String, Set<String>> change : changedMethods.entrySet()) {
          String fullQualifiedClassname = getFQN(change.getKey());
          if (change.getValue() != null) {
             for (String method : change.getValue()) {
                if (method.contains("(")) {
                   String methodWithoutParameters = method.substring(0, method.indexOf('('));
-                  MethodCall entity = new MethodCall(fullQualifiedClassname, containingFile.getModule(), methodWithoutParameters);
+                  MethodCall entity = new MethodCall(fullQualifiedClassname, containingType.getModule(), methodWithoutParameters);
                   entity.createParameters(method.substring(method.indexOf('(')));
                   entities.add(entity);
                } else {
-                  MethodCall entity = new MethodCall(fullQualifiedClassname, containingFile.getModule(), method);
+                  MethodCall entity = new MethodCall(fullQualifiedClassname, containingType.getModule(), method);
                   entities.add(entity);
                }
 
             }
          } else {
-            MethodCall entity = new MethodCall(fullQualifiedClassname, containingFile.getModule());
+            Type entity = new Type(fullQualifiedClassname, containingType.getModule());
             entities.add(entity);
          }
       }
@@ -176,25 +177,25 @@ public class ClazzChangeData {
 
    private String getFQN(final String className) {
       String fullQualifiedClassname;
-      LOG.trace("Containing file: {} {} package: {}", containingFile, className, containingFile.getPackage());
-      if (!"".equals(containingFile.getPackage())) {
-         fullQualifiedClassname = containingFile.getPackage() + "." + className;
+      LOG.trace("Containing file: {} {} package: {}", containingType, className, containingType.getPackage());
+      if (!"".equals(containingType.getPackage())) {
+         fullQualifiedClassname = containingType.getPackage() + "." + className;
       } else {
          fullQualifiedClassname = className;
       }
       return fullQualifiedClassname;
    }
 
-   public Set<MethodCall> getImportChanges() {
+   public Set<Type> getImportChanges() {
       return importChanges;
    }
 
-   public void addImportChange(final String name, final List<MethodCall> entities) {
-      importChanges.add(new MethodCall(name, ""));
+   public void addImportChange(final String name, final List<Type> entities) {
+      importChanges.add(new Type(name, ""));
       isChange = true;
       isOnlyMethodChange = false;
 
-      for (MethodCall entity : entities) {
+      for (Type entity : entities) {
          addClazzChange(entity);
       }
    }

@@ -21,6 +21,7 @@ import com.github.javaparser.ast.Node;
 import de.dagere.nodeDiffDetector.config.FolderConfig;
 import de.dagere.nodeDiffDetector.data.MethodCall;
 import de.dagere.nodeDiffDetector.data.TestCase;
+import de.dagere.nodeDiffDetector.data.Type;
 import de.dagere.nodeDiffDetector.utils.Endings;
 import de.dagere.nodeDiffDetector.utils.JavaParserProvider;
 
@@ -177,7 +178,7 @@ public class TypeFileFinder {
       return getClazzFile(moduleOrProjectFolder, testcase.toEntity());
    }
 
-   public File getClazzFile(final File moduleOrProjectFolder, final MethodCall entity) {
+   public File getClazzFile(final File moduleOrProjectFolder, final Type entity) {
       if (!moduleOrProjectFolder.exists()) {
          throw new RuntimeException("Module folder " + moduleOrProjectFolder.getAbsolutePath() + " did not exist");
       }
@@ -248,8 +249,8 @@ public class TypeFileFinder {
       return null;
    }
 
-   public File getSourceFile(final File folder, final MethodCall clazz) {
-      final MethodCall sourceContainingClazz = clazz.getSourceContainingClazz();
+   public File getSourceFile(final File folder, final Type type) {
+      final Type sourceContainingClazz = type.getSourceContainingClazz();
 
       File moduleFolder;
       if (sourceContainingClazz.getModule().length() > 0) {

@@ -119,7 +119,7 @@ public class TestParameterComparator {
       ClassOrInterfaceDeclaration myInner = clazz.findAll(ClassOrInterfaceDeclaration.class).get(1);
       CallableDeclaration<?> method = myInner.findAll(CallableDeclaration.class).get(0);
 
-      MethodCall traceElementMethodWrong = new MethodCall("Clazz$MyInner", "doStuff");
+      MethodCall traceElementMethodWrong = new MethodCall("Clazz$MyInner", "", "doStuff");
       traceElementMethodWrong.getParameters().add("Clazz");
       traceElementMethodWrong.getParameters().add("int");
       boolean isEqualMethodWrong = new ParameterComparator(clazz).parametersEqual(traceElementMethodWrong, method);

@@ -13,7 +13,7 @@ import com.github.javaparser.ParseException;
 
 import de.dagere.nodeDiffDetector.config.FolderConfig;
 import de.dagere.nodeDiffDetector.config.SourceCodeFolders;
-import de.dagere.nodeDiffDetector.data.MethodCall;
+import de.dagere.nodeDiffDetector.data.Type;
 import de.dagere.nodeDiffDetector.typeFinding.TypeFileFinder;
 import de.dagere.peass.dependency.changesreading.ClazzChangeData;
 
@@ -29,8 +29,8 @@ public class ChangeDetector {
       this.sourceCodeFolders = sourceCodeFolders;
    }
 
-   public void compareClazz(final Map<MethodCall, ClazzChangeData> changedClassesMethods, final Iterator<MethodCall> clazzIterator) {
-      final MethodCall clazz = clazzIterator.next();
+   public void compareClazz(final Map<Type, ClazzChangeData> changedClassesMethods, final Iterator<Type> clazzIterator) {
+      final Type clazz = clazzIterator.next();
       final ClazzChangeData changeData = new ClazzChangeData(clazz);
       try {
          TypeFileFinder finder = new TypeFileFinder(config);
@@ -57,12 +57,12 @@ public class ChangeDetector {
       }
    }
    
-   private void compareFiles(final Map<MethodCall, ClazzChangeData> changedClassesMethods, final Iterator<MethodCall> clazzIterator, final MethodCall clazz,
+   private void compareFiles(final Map<Type, ClazzChangeData> changedClassesMethods, final Iterator<Type> clazzIterator, final Type clazz,
          final ClazzChangeData changeData, final File newFile, final File oldFile) throws ParseException, IOException {
       FileComparisonUtil.getChangedMethods(newFile, oldFile, changeData);
       boolean isImportChange = false;
       TypeFileFinder finder = new TypeFileFinder(config);
-      for (MethodCall entity : changeData.getImportChanges()) {
+      for (Type entity : changeData.getImportChanges()) {
          final File entityFile = finder.getSourceFile(sourceCodeFolders.getProjectFolder(), entity);
          if (entityFile != null && entityFile.exists()) {
             isImportChange = true;

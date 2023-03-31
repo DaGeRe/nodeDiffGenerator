@@ -9,11 +9,9 @@ import org.apache.logging.log4j.Logger;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class MethodCall implements Comparable<MethodCall> {
+public class MethodCall extends Type {
 
    private static final Logger LOG = LogManager.getLogger(MethodCall.class);
 
@@ -22,42 +20,11 @@ public class MethodCall implements Comparable<MethodCall> {
    public static final String CLAZZ_SEPARATOR = "$";
 
    private String method;
-   private final String module;
-   private final String javaClazzName;
    private final List<String> parameters = new LinkedList<String>();
-
-   public MethodCall(@JsonProperty("clazz") final String clazz, @JsonProperty("module") final String module) {
-      if (clazz.contains(File.separator)) {
-         throw new RuntimeException("Class should be full qualified name, not path! " + clazz);
-      }
-      this.module = module != null ? module : "";
-      if (!clazz.contains(METHOD_SEPARATOR)) {
-         javaClazzName = clazz;
-      } else {
-         javaClazzName = clazz.substring(0, clazz.lastIndexOf(MethodCall.METHOD_SEPARATOR));
-         method = clazz.substring(clazz.lastIndexOf(MethodCall.METHOD_SEPARATOR) + 1);
-      }
-      if (method != null && (method.contains("(") && method.contains(")"))) {
-         String parameterString = method.substring(method.indexOf("(") + 1, method.length() - 1).replaceAll(" ", "");
-         createParameters(parameterString);
-         method = method.substring(0, method.indexOf("("));
-      }
-
-      if (javaClazzName.startsWith(".")) {
-         throw new RuntimeException("Java class names are not allowed to start with ., but was " + javaClazzName);
-      }
-
-      LOG.trace(javaClazzName + " " + clazz);
-      LOG.trace(javaClazzName);
-
-      if (javaClazzName.startsWith(".")) {
-         throw new RuntimeException("Java class names are not allowed to start with ., but was " + javaClazzName);
-      }
-   }
 
    @JsonCreator
    public MethodCall(@JsonProperty("clazz") final String clazz, @JsonProperty("module") final String module, @JsonProperty("method") final String testMethodName) {
-      this(clazz, module);
+      super(clazz, module);
 
       if (testMethodName != null && (testMethodName.contains("(") && testMethodName.contains(")"))) {
          String parameterString = testMethodName.substring(testMethodName.indexOf("(") + 1, testMethodName.length() - 1).replaceAll(" ", "");
@@ -66,98 +33,15 @@ public class MethodCall implements Comparable<MethodCall> {
       } else {
          method = testMethodName;
       }
-   }
-
-   public MethodCall(final String fullName) {
-      int moduleIndex = fullName.indexOf(MethodCall.MODULE_SEPARATOR);
-      if (moduleIndex == -1) {
-         module = "";
-         if (fullName.contains(File.separator)) {
-            throw new RuntimeException("Class should be full qualified name, not path! " + fullName);
-         }
-         final int methodIndex = fullName.lastIndexOf(MethodCall.METHOD_SEPARATOR);
-         if (methodIndex == -1) {
-            javaClazzName = fullName;
-            method = null;
-         } else {
-            javaClazzName = fullName.substring(0, methodIndex);
-            method = fullName.substring(methodIndex + 1);
-
-            if (fullName.contains("(")) {
-               method = fullName.substring(methodIndex + 1, fullName.indexOf("("));
-               String paramString = fullName.substring(fullName.indexOf("(") + 1, fullName.length() - 1);
-               createParameters(paramString);
-            } else {
-               method = fullName.substring(methodIndex + 1);
-            }
-         }
-      } else {
-         module = fullName.substring(0, moduleIndex);
-         String end = fullName.substring(moduleIndex + 1);
-         final int methodIndex = end.lastIndexOf(MethodCall.METHOD_SEPARATOR);
-         if (methodIndex == -1) {
-            javaClazzName = end;
-            method = null;
-         } else {
-            javaClazzName = end.substring(0, methodIndex);
-            method = end.substring(methodIndex + 1);
-
-            if (end.contains("(")) {
-               method = end.substring(methodIndex + 1, end.indexOf("("));
-               String paramString = end.substring(end.indexOf("(") + 1, end.length() - 1);
-               createParameters(paramString);
-            } else {
-               method = end.substring(methodIndex + 1);
-            }
-         }
+      
+      if (method == null) {
+         throw new RuntimeException("Method is not allowed to be null!");
       }
-      if (javaClazzName.startsWith(".")) {
-         throw new RuntimeException("Java class names are not allowed to start with ., but was " + javaClazzName);
-      }
-   }
-
-   @JsonIgnore
-   public String getJavaClazzName() {
-      return javaClazzName;
-   }
-
-   @JsonIgnore
-   public String getSimpleClazzName() {
-      return javaClazzName.substring(javaClazzName.lastIndexOf('.') + 1);
-   }
-   
-   @JsonIgnore
-   public String getSimplestClazzName() {
-      if (javaClazzName.contains(MethodCall.CLAZZ_SEPARATOR)) {
-         return javaClazzName.substring(javaClazzName.lastIndexOf(MethodCall.CLAZZ_SEPARATOR) + 1);
-      }
-      final String simpleClazz = javaClazzName.substring(javaClazzName.lastIndexOf('.') + 1);
-      return simpleClazz;
    }
 
    @JsonIgnore
    public String getSimpleFullName() {
       return javaClazzName.substring(javaClazzName.lastIndexOf('.') + 1) + METHOD_SEPARATOR + method;
-   }
-
-   @JsonIgnore
-   public String getPackage() {
-      final String result = javaClazzName.contains(".") ? javaClazzName.substring(0, javaClazzName.lastIndexOf('.')) : "";
-      return result;
-   }
-   
-   @JsonIgnore
-   public boolean isInnerClassCall() {
-      return javaClazzName.contains(MethodCall.CLAZZ_SEPARATOR);
-   }
-
-   @JsonIgnore
-   public String getOuterClass() {
-      return javaClazzName.substring(0, javaClazzName.lastIndexOf(MethodCall.CLAZZ_SEPARATOR));
-   }
-
-   public String getClazz() {
-      return javaClazzName;
    }
 
    public String getMethod() {
@@ -171,11 +55,6 @@ public class MethodCall implements Comparable<MethodCall> {
    @JsonIgnore
    public String getParameterString() {
       return MethodCallHelper.getParameterString(parameters.toArray(new String[0]));
-   }
-
-   @JsonInclude(Include.NON_EMPTY)
-   public String getModule() {
-      return module;
    }
 
    @Override
@@ -224,37 +103,11 @@ public class MethodCall implements Comparable<MethodCall> {
       }
    }
 
-   @Override
-   public int hashCode() {
-      return javaClazzName.hashCode();
-   }
-
-   @Override
-   public int compareTo(final MethodCall o) {
-      final String own = toString();
-      final String other = o.toString();
-      return own.compareTo(other);
-   }
-
    public MethodCall copy() {
-      final MethodCall copy = new MethodCall(javaClazzName, module);
+      final MethodCall copy = new MethodCall(javaClazzName, module, method);
       copy.setMethod(this.method);
+      copy.createParameters(getParameterString());
       return copy;
-   }
-
-   @JsonIgnore
-   public MethodCall onlyClazz() {
-      return new MethodCall(javaClazzName, module);
-   }
-
-   @JsonIgnore
-   public MethodCall getSourceContainingClazz() {
-      if (!javaClazzName.contains(CLAZZ_SEPARATOR)) {
-         return new MethodCall(javaClazzName, module);
-      } else {
-         final String clazzName = javaClazzName.substring(0, javaClazzName.indexOf(CLAZZ_SEPARATOR));
-         return new MethodCall(clazzName, module, "");
-      }
    }
 
    public List<String> getParameters() {
@@ -334,6 +187,103 @@ public class MethodCall implements Comparable<MethodCall> {
    public void addParameters(String... parameters) {
       for (String parameter : parameters) {
          this.parameters.add(parameter);
+      }
+   }
+
+   public static MethodCall createMethodCallFromString(String fullName) {
+      final int methodIndex = fullName.lastIndexOf(MethodCall.METHOD_SEPARATOR);
+      if (methodIndex == -1) {
+         throw new RuntimeException("Expecting String to contain METHOD_SEPARATOR, but was " + fullName);
+      }
+
+      String javaClazzName = fullName.substring(0, methodIndex);
+      String method = fullName.substring(methodIndex + 1);
+
+      String paramString, module;
+      if (fullName.contains("(")) {
+         method = fullName.substring(methodIndex + 1, fullName.indexOf("("));
+         paramString = fullName.substring(fullName.indexOf("(") + 1, fullName.length() - 1);
+      } else {
+         method = fullName.substring(methodIndex + 1);
+         paramString = null;
+      }
+
+      int moduleIndex = fullName.indexOf(MethodCall.MODULE_SEPARATOR);
+      if (moduleIndex == -1) {
+         module = "";
+      } else {
+         module = fullName.substring(0, moduleIndex);
+         javaClazzName = fullName.substring(moduleIndex + 1, methodIndex);
+      }
+
+      if (javaClazzName.contains(File.separator)) {
+         throw new RuntimeException("Class should be full qualified name, not path! " + fullName);
+      }
+      
+      MethodCall methodCall = new MethodCall(javaClazzName, module, method);
+      if (paramString != null) {
+         methodCall.createParameters(paramString);
+      }
+      return methodCall;
+   }
+
+   public static Type createFromString(final String fullName) {
+      String module, javaClazzName, method = null, paramString = null;
+
+      int moduleIndex = fullName.indexOf(MethodCall.MODULE_SEPARATOR);
+      if (moduleIndex == -1) {
+         module = "";
+         if (fullName.contains(File.separator)) {
+            throw new RuntimeException("Class should be full qualified name, not path! " + fullName);
+         }
+         final int methodIndex = fullName.lastIndexOf(MethodCall.METHOD_SEPARATOR);
+         if (methodIndex == -1) {
+            javaClazzName = fullName;
+            method = null;
+         } else {
+            javaClazzName = fullName.substring(0, methodIndex);
+            method = fullName.substring(methodIndex + 1);
+
+            if (fullName.contains("(")) {
+               method = fullName.substring(methodIndex + 1, fullName.indexOf("("));
+               paramString = fullName.substring(fullName.indexOf("(") + 1, fullName.length() - 1);
+            } else {
+               method = fullName.substring(methodIndex + 1);
+            }
+         }
+      } else {
+         module = fullName.substring(0, moduleIndex);
+         String end = fullName.substring(moduleIndex + 1);
+         final int methodIndex = end.lastIndexOf(MethodCall.METHOD_SEPARATOR);
+         if (methodIndex == -1) {
+            javaClazzName = end;
+            method = null;
+         } else {
+            javaClazzName = end.substring(0, methodIndex);
+            method = end.substring(methodIndex + 1);
+
+            if (end.contains("(")) {
+               method = end.substring(methodIndex + 1, end.indexOf("("));
+               paramString = end.substring(end.indexOf("(") + 1, end.length() - 1);
+            } else {
+               method = end.substring(methodIndex + 1);
+            }
+         }
+      }
+
+      if (javaClazzName.startsWith(".")) {
+         throw new RuntimeException("Java class names are not allowed to start with ., but was " + javaClazzName);
+      }
+
+      if (method != null) {
+         MethodCall call = new MethodCall(javaClazzName, module, method);
+         if (paramString != null) {
+            call.createParameters(paramString);
+         }
+         return call;
+      } else {
+         Type type = new Type(javaClazzName, module);
+         return type;
       }
    }
 

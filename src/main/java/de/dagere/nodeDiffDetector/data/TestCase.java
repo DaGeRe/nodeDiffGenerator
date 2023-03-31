@@ -53,7 +53,7 @@ public abstract class TestCase implements Comparable<TestCase>, Serializable {
       return module;
    }
 
-   public abstract MethodCall toEntity();
+   public abstract Type toEntity();
    
    @JsonIgnore
    public abstract String getExecutable();
@@ -118,8 +118,9 @@ public abstract class TestCase implements Comparable<TestCase>, Serializable {
       return new TestClazzCall(clazz, module);
    }
 
-   public MethodCall onlyClazzEntity() {
-      return new MethodCall(clazz, module);
+   @JsonIgnore
+   public Type onlyClazzEntity() {
+      return new Type(clazz, module);
    }
 
 }

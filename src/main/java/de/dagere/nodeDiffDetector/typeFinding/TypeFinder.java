@@ -11,6 +11,7 @@ import com.github.javaparser.ast.body.EnumDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 
 import de.dagere.nodeDiffDetector.data.MethodCall;
+import de.dagere.nodeDiffDetector.data.Type;
 
 public class TypeFinder {
    public static String getContainingClazz(final Node statement) {
@@ -32,7 +33,7 @@ public class TypeFinder {
       return clazz;
    }
 
-   public static TypeDeclaration<?> findClazz(final MethodCall entity, final List<Node> nodes) {
+   public static TypeDeclaration<?> findClazz(final Type entity, final List<Node> nodes) {
       TypeDeclaration<?> declaration = null;
       for (final Node node : nodes) {
          if (node instanceof TypeDeclaration<?>) {
@@ -43,7 +44,7 @@ public class TypeFinder {
                break;
             } else {
                if (entity.getSimpleClazzName().startsWith(nameAsString + MethodCall.CLAZZ_SEPARATOR)) {
-                  MethodCall inner = new MethodCall(entity.getSimpleClazzName().substring(nameAsString.length() + 1), entity.getModule());
+                  Type inner = new Type(entity.getSimpleClazzName().substring(nameAsString.length() + 1), entity.getModule());
                   declaration = findClazz(inner, node.getChildNodes());
                }
             }
@@ -92,11 +93,11 @@ public class TypeFinder {
       return clazzes;
    }
 
-   public static List<MethodCall> getClazzEntities(final CompilationUnit cu) {
+   public static List<Type> getClazzEntities(final CompilationUnit cu) {
       List<String> clazzes = TypeFinder.getTypes(cu);
-      List<MethodCall> entities = new LinkedList<>();
+      List<Type> entities = new LinkedList<>();
       for (String clazz : clazzes) {
-         entities.add(new MethodCall(clazz, ""));
+         entities.add(new Type(clazz, ""));
       }
       return entities;
    }

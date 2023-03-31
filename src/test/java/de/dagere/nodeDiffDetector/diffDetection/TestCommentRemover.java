@@ -13,6 +13,7 @@ import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.comments.Comment;
 
 import de.dagere.nodeDiffDetector.data.MethodCall;
+import de.dagere.nodeDiffDetector.data.Type;
 import de.dagere.nodeDiffDetector.typeFinding.TypeFinder;
 import de.dagere.nodeDiffDetector.utils.JavaParserProvider;
 
@@ -32,7 +33,7 @@ public class TestCommentRemover {
       CompilationUnit unit = JavaParserProvider.parse(testFile);
 
       // This comment should be removed
-      TypeDeclaration<?> clazz = TypeFinder.findClazz(new MethodCall("de.dagere.nodeDiffDetector.diffDetection.TestCommentRemover"), unit.getChildNodes());
+      TypeDeclaration<?> clazz = TypeFinder.findClazz(new Type("de.dagere.nodeDiffDetector.diffDetection.TestCommentRemover", ""), unit.getChildNodes());
       new CommentRemover(clazz);
 
       Assert.assertFalse(clazz.getComment().isPresent());

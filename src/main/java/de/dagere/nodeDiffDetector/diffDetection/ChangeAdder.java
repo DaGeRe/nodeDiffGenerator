@@ -19,7 +19,7 @@ import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.stmt.Statement;
 
-import de.dagere.nodeDiffDetector.data.MethodCall;
+import de.dagere.nodeDiffDetector.data.Type;
 import de.dagere.nodeDiffDetector.typeFinding.TypeFinder;
 import de.dagere.peass.dependency.changesreading.ClazzChangeData;
 import de.dagere.peass.dependency.changesreading.FQNDeterminer;
@@ -49,14 +49,14 @@ public class ChangeAdder {
    }
    
    static void handleUnknownChange(final ClazzChangeData changedata, final CompilationUnit cu) {
-      List<MethodCall> entities = TypeFinder.getClazzEntities(cu);
-      for (MethodCall entity : entities) {
+      List<Type> entities = TypeFinder.getClazzEntities(cu);
+      for (Type entity : entities) {
          changedata.addClazzChange(entity);
       }
    }
    
    private static void handleImportChange(final ClazzChangeData changedata, final ImportDeclaration node, final CompilationUnit cu) {
-      List<MethodCall> entities = TypeFinder.getClazzEntities(cu);
+      List<Type> entities = TypeFinder.getClazzEntities(cu);
       
       changedata.addImportChange(node.getNameAsString(), entities);
    }

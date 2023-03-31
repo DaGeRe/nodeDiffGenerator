@@ -15,11 +15,11 @@ public class TestTheMethodCall {
 
    @Test
    public void testAlltogether() {
-      MethodCall entity = new MethodCall("de.test.ClazzA#method(int)");
+      MethodCall entity = MethodCall.createMethodCallFromString("de.test.ClazzA#method(int)");
       Assert.assertEquals("de.test.ClazzA", entity.getClazz());
       Assert.assertEquals("method", entity.getMethod());
 
-      MethodCall entityWithModule = new MethodCall("moduleA/submodul§de.test.ClazzA#method(int)");
+      MethodCall entityWithModule = MethodCall.createMethodCallFromString("moduleA/submodul§de.test.ClazzA#method(int)");
       Assert.assertEquals("moduleA/submodul", entityWithModule.getModule());
       Assert.assertEquals("de.test.ClazzA", entityWithModule.getClazz());
       Assert.assertEquals("method", entityWithModule.getMethod());
@@ -27,7 +27,7 @@ public class TestTheMethodCall {
 
    @Test
    public void testParametersDirectlyClazz() {
-      MethodCall entity = new MethodCall("de.ClassA#methodA(de.peass.Test,int,String)", "moduleA");
+      MethodCall entity = MethodCall.createMethodCallFromString("moduleA§de.ClassA#methodA(de.peass.Test,int,String)");
       System.out.println(entity.getParametersPrintable());
       MatcherAssert.assertThat(entity.getParameters(), Matchers.hasSize(3));
       Assert.assertEquals("methodA", entity.getMethod());
@@ -85,15 +85,21 @@ public class TestTheMethodCall {
    @Test
    public void testSerialization() throws JsonProcessingException, IOException {
       String entityString = "de.peass.ClassA#methodA";
-      MethodCall entity = new MethodCallDeserializer().deserializeKey(entityString, null);
+      Type entity = new MethodCallDeserializer().deserializeKey(entityString, null);
       Assert.assertEquals("de.peass.ClassA", entity.getClazz());
-      Assert.assertEquals("methodA", entity.getMethod());
+      Assert.assertEquals("methodA", ((MethodCall) entity).getMethod());
       Assert.assertEquals("", entity.getModule());
-      
+
       String entityStringWithModule = "moduleA§de.peass.ClassA#methodA";
-      MethodCall entityWithModule = new MethodCallDeserializer().deserializeKey(entityStringWithModule, null);
+      Type entityWithModule = new MethodCallDeserializer().deserializeKey(entityStringWithModule, null);
       Assert.assertEquals("de.peass.ClassA", entityWithModule.getClazz());
-      Assert.assertEquals("methodA", entityWithModule.getMethod());
+      Assert.assertEquals("methodA", ((MethodCall) entityWithModule).getMethod());
       Assert.assertEquals("moduleA", entityWithModule.getModule());
+      
+      String typeString = "moduleA§de.peass.ClassA";
+      Type type = new MethodCallDeserializer().deserializeKey(typeString, null);
+      Assert.assertEquals("de.peass.ClassA", type.getClazz());
+      Assert.assertEquals("moduleA", type.getModule());
+      Assert.assertEquals(Type.class, type.getClass());
    }
 }

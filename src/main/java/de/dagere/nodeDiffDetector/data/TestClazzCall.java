@@ -20,8 +20,8 @@ public class TestClazzCall extends TestCase {
       return test;
    }
 
-   public MethodCall toEntity() {
-      return new MethodCall(clazz, module);
+   public Type toEntity() {
+      return new Type(clazz, module);
    }
    
    @JsonIgnore
