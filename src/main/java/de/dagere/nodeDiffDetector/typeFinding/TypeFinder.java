@@ -84,7 +84,7 @@ public class TypeFinder {
       }
    }
 
-   public static List<String> getClazzes(final CompilationUnit cu) {
+   public static List<String> getTypes(final CompilationUnit cu) {
       final List<String> clazzes = new LinkedList<>();
       for (final Node node : cu.getChildNodes()) {
          clazzes.addAll(getTypes(node, "", "$"));
@@ -93,7 +93,7 @@ public class TypeFinder {
    }
 
    public static List<MethodCall> getClazzEntities(final CompilationUnit cu) {
-      List<String> clazzes = TypeFinder.getClazzes(cu);
+      List<String> clazzes = TypeFinder.getTypes(cu);
       List<MethodCall> entities = new LinkedList<>();
       for (String clazz : clazzes) {
          entities.add(new MethodCall(clazz, ""));

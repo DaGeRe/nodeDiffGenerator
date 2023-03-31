@@ -233,7 +233,7 @@ public class TypeFileFinder {
                   try {
                      if (containingFileCandidate.isFile()) {
                         CompilationUnit cu = JavaParserProvider.parse(containingFileCandidate);
-                        List<String> clazzes = TypeFinder.getClazzes(cu);
+                        List<String> clazzes = TypeFinder.getTypes(cu);
                         if (clazzes.contains(clazzName)) {
                            return containingFileCandidate;
                         }
