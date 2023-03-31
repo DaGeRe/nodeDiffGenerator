@@ -95,7 +95,11 @@ public class MethodReader {
       }
    }
 
-   public static String getMethodSource(final MethodCall entity, final String method, final CompilationUnit clazzUnit) {
+   /**
+    * @deprecated Please use TypeCache.getMethodSource instead (and use a type cache, to avoid reloading and reparsing files)
+    */
+   @Deprecated
+   private static String getMethodSource(final MethodCall entity, final String method, final CompilationUnit clazzUnit) {
       final Node node = SourceReadUtils.getMethod(entity, clazzUnit);
       if (node != null) {
          return node.toString();
