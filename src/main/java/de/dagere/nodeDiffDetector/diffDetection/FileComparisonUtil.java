@@ -38,10 +38,10 @@ import com.github.javaparser.ast.comments.JavadocComment;
 import com.github.javaparser.ast.comments.LineComment;
 import com.github.javaparser.ast.stmt.BlockStmt;
 
-import de.dagere.nodeDiffDetector.clazzFinding.ClazzFileFinder;
 import de.dagere.nodeDiffDetector.config.FolderConfig;
 import de.dagere.nodeDiffDetector.data.MethodCall;
 import de.dagere.nodeDiffDetector.sourceReading.SourceReadUtils;
+import de.dagere.nodeDiffDetector.typeFinding.TypeFileFinder;
 import de.dagere.nodeDiffDetector.utils.JavaParserProvider;
 import de.dagere.peass.dependency.changesreading.ClazzChangeData;
 
@@ -163,7 +163,7 @@ public final class FileComparisonUtil {
    }
 
    public static String getMethodSource(final File projectFolder, final MethodCall entity, final String method, final FolderConfig config) throws FileNotFoundException {
-      ClazzFileFinder finder = new ClazzFileFinder(config);
+      TypeFileFinder finder = new TypeFileFinder(config);
       final File file = finder.getSourceFile(projectFolder, entity);
       if (file != null) {
          LOG.debug("Found:  {} {}", file, file.exists());

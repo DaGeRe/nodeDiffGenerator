@@ -19,8 +19,8 @@ import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.stmt.Statement;
 
-import de.dagere.nodeDiffDetector.clazzFinding.ClazzFinder;
 import de.dagere.nodeDiffDetector.data.MethodCall;
+import de.dagere.nodeDiffDetector.typeFinding.TypeFinder;
 import de.dagere.peass.dependency.changesreading.ClazzChangeData;
 import de.dagere.peass.dependency.changesreading.FQNDeterminer;
 
@@ -41,7 +41,7 @@ public class ChangeAdder {
    }
 
    static void handleClassChange(final ClazzChangeData changedata, final ClassOrInterfaceDeclaration node) {
-      String clazz = ClazzFinder.getContainingClazz(node);
+      String clazz = TypeFinder.getContainingClazz(node);
       if (!clazz.isEmpty()) {
          changedata.addClazzChange(clazz);
          changedata.setOnlyMethodChange(false);
@@ -49,14 +49,14 @@ public class ChangeAdder {
    }
    
    static void handleUnknownChange(final ClazzChangeData changedata, final CompilationUnit cu) {
-      List<MethodCall> entities = ClazzFinder.getClazzEntities(cu);
+      List<MethodCall> entities = TypeFinder.getClazzEntities(cu);
       for (MethodCall entity : entities) {
          changedata.addClazzChange(entity);
       }
    }
    
    private static void handleImportChange(final ClazzChangeData changedata, final ImportDeclaration node, final CompilationUnit cu) {
-      List<MethodCall> entities = ClazzFinder.getClazzEntities(cu);
+      List<MethodCall> entities = TypeFinder.getClazzEntities(cu);
       
       changedata.addImportChange(node.getNameAsString(), entities);
    }
@@ -68,18 +68,18 @@ public class ChangeAdder {
          if (parent instanceof ConstructorDeclaration) {
             ConstructorDeclaration constructorDeclaration = (ConstructorDeclaration) parent;
             final String parameters = getParameters(unit, constructorDeclaration);
-            String clazz = ClazzFinder.getContainingClazz(parent);
+            String clazz = TypeFinder.getContainingClazz(parent);
             changedata.addChange(clazz, "<init>" + parameters);
             finished = true;
          } else if (parent instanceof MethodDeclaration) {
             final MethodDeclaration methodDeclaration = (MethodDeclaration) parent;
             final String parameters = getParameters(unit, methodDeclaration);
-            String clazz = ClazzFinder.getContainingClazz(parent);
+            String clazz = TypeFinder.getContainingClazz(parent);
             changedata.addChange(clazz, methodDeclaration.getNameAsString() + parameters);
             finished = true;
          } else if (parent instanceof InitializerDeclaration) {
             InitializerDeclaration initializerDeclaration = (InitializerDeclaration) parent;
-            String clazz = ClazzFinder.getContainingClazz(initializerDeclaration);
+            String clazz = TypeFinder.getContainingClazz(initializerDeclaration);
             changedata.addChange(clazz, "<init>");
             finished = true;
          }
@@ -91,7 +91,7 @@ public class ChangeAdder {
       }
       if (!finished) {
          LOG.debug("No containing method found!");
-         changedata.addClazzChange(ClazzFinder.getContainingClazz(statement));
+         changedata.addClazzChange(TypeFinder.getContainingClazz(statement));
          changedata.setOnlyMethodChange(false);
       }
    }

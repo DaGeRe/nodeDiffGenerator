@@ -11,11 +11,11 @@ import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import de.dagere.nodeDiffDetector.clazzFinding.ClazzFileFinder;
 import de.dagere.nodeDiffDetector.config.FolderConfig;
 import de.dagere.nodeDiffDetector.data.MethodCall;
 import de.dagere.nodeDiffDetector.diffDetection.FileComparisonUtil;
 import de.dagere.nodeDiffDetector.testUtils.TestConstants;
+import de.dagere.nodeDiffDetector.typeFinding.TypeFileFinder;
 
 public class TestClazzFileFinder {
    
@@ -23,7 +23,7 @@ public class TestClazzFileFinder {
    
    @Test
    public void testClasses() {
-      List<String> clazzes = new ClazzFileFinder(TestConstants.DEFAULT_FOLDERS).getClasses(SOURCE);
+      List<String> clazzes = new TypeFileFinder(TestConstants.DEFAULT_FOLDERS).getTypes(SOURCE);
       
       System.out.println(clazzes);
       
@@ -42,7 +42,7 @@ public class TestClazzFileFinder {
       FolderConfig config = Mockito.mock(FolderConfig.class);
       Mockito.when(config.getClazzFolders()).thenReturn(Arrays.asList("src/main/scala"));
       
-      List<String> clazzes = new ClazzFileFinder(config).getClasses(SOURCE);
+      List<String> clazzes = new TypeFileFinder(config).getTypes(SOURCE);
       
       System.out.println(clazzes);
       
@@ -52,13 +52,13 @@ public class TestClazzFileFinder {
    
    @Test
    public void testGetSourceFile() throws FileNotFoundException {
-      File sourceFileClass = new ClazzFileFinder(TestConstants.DEFAULT_FOLDERS).getSourceFile(SOURCE, new MethodCall("de.dagere.LocalClass"));
+      File sourceFileClass = new TypeFileFinder(TestConstants.DEFAULT_FOLDERS).getSourceFile(SOURCE, new MethodCall("de.dagere.LocalClass"));
       Assert.assertNotNull(sourceFileClass);
       
-      File sourceFileEnum = new ClazzFileFinder(TestConstants.DEFAULT_FOLDERS).getSourceFile(SOURCE, new MethodCall("de.dagere.LocalEnum"));
+      File sourceFileEnum = new TypeFileFinder(TestConstants.DEFAULT_FOLDERS).getSourceFile(SOURCE, new MethodCall("de.dagere.LocalEnum"));
       Assert.assertNotNull(sourceFileEnum);
       
-      File sourceFileInterface = new ClazzFileFinder(TestConstants.DEFAULT_FOLDERS).getSourceFile(SOURCE, new MethodCall("de.dagere.LocalInterface"));
+      File sourceFileInterface = new TypeFileFinder(TestConstants.DEFAULT_FOLDERS).getSourceFile(SOURCE, new MethodCall("de.dagere.LocalInterface"));
       Assert.assertNotNull(sourceFileInterface);
       
       MethodCall exampleEntity = new MethodCall("de.dagere.LocalClass#myMethod(int)");

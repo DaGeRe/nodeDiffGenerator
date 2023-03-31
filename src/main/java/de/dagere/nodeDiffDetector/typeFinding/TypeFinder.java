@@ -1,4 +1,4 @@
-package de.dagere.nodeDiffDetector.clazzFinding;
+package de.dagere.nodeDiffDetector.typeFinding;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -12,7 +12,7 @@ import com.github.javaparser.ast.body.TypeDeclaration;
 
 import de.dagere.nodeDiffDetector.data.MethodCall;
 
-public class ClazzFinder {
+public class TypeFinder {
    public static String getContainingClazz(final Node statement) {
       String clazz = "";
       Node current = statement;
@@ -52,7 +52,7 @@ public class ClazzFinder {
       return declaration;
    }
    
-   static List<String> getEntities(final Node node, final String parent, final String clazzSeparator) {
+   static List<String> getTypes(final Node node, final String parent, final String clazzSeparator) {
       final List<String> clazzes = new LinkedList<>();
       if (node instanceof ClassOrInterfaceDeclaration) {
          addClazzesOrInterfaces(node, parent, clazzSeparator, clazzes);
@@ -60,7 +60,7 @@ public class ClazzFinder {
          addEnums(node, parent, clazzSeparator, clazzes);
       } else {
          for (final Node child : node.getChildNodes()) {
-            clazzes.addAll(getEntities(child, parent, MethodCall.CLAZZ_SEPARATOR));
+            clazzes.addAll(getTypes(child, parent, MethodCall.CLAZZ_SEPARATOR));
          }
       }
       return clazzes;
@@ -71,7 +71,7 @@ public class ClazzFinder {
       final String enumName = parent.length() > 0 ? parent + clazzSeparator + enumDecl.getName().getIdentifier() : enumDecl.getName().getIdentifier();
       clazzes.add(enumName);
       for (final Node child : node.getChildNodes()) {
-         clazzes.addAll(getEntities(child, enumName, MethodCall.CLAZZ_SEPARATOR));
+         clazzes.addAll(getTypes(child, enumName, MethodCall.CLAZZ_SEPARATOR));
       }
    }
 
@@ -80,20 +80,20 @@ public class ClazzFinder {
       final String clazzname = parent.length() > 0 ? parent + clazzSeparator + clazz.getName().getIdentifier() : clazz.getName().getIdentifier();
       clazzes.add(clazzname);
       for (final Node child : node.getChildNodes()) {
-         clazzes.addAll(getEntities(child, clazzname, MethodCall.CLAZZ_SEPARATOR));
+         clazzes.addAll(getTypes(child, clazzname, MethodCall.CLAZZ_SEPARATOR));
       }
    }
 
    public static List<String> getClazzes(final CompilationUnit cu) {
       final List<String> clazzes = new LinkedList<>();
       for (final Node node : cu.getChildNodes()) {
-         clazzes.addAll(getEntities(node, "", "$"));
+         clazzes.addAll(getTypes(node, "", "$"));
       }
       return clazzes;
    }
 
    public static List<MethodCall> getClazzEntities(final CompilationUnit cu) {
-      List<String> clazzes = ClazzFinder.getClazzes(cu);
+      List<String> clazzes = TypeFinder.getClazzes(cu);
       List<MethodCall> entities = new LinkedList<>();
       for (String clazz : clazzes) {
          entities.add(new MethodCall(clazz, ""));

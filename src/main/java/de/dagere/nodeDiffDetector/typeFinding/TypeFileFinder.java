@@ -1,4 +1,4 @@
-package de.dagere.nodeDiffDetector.clazzFinding;
+package de.dagere.nodeDiffDetector.typeFinding;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -30,9 +30,9 @@ import de.dagere.nodeDiffDetector.utils.JavaParserProvider;
  * @author reichelt
  *
  */
-public class ClazzFileFinder {
+public class TypeFileFinder {
 
-   private static final Logger LOG = LogManager.getLogger(ClazzFileFinder.class);
+   private static final Logger LOG = LogManager.getLogger(TypeFileFinder.class);
 
    public static String getOuterClass(final String clazzname) {
       final int innerClassSeparatorIndex = clazzname.indexOf(MethodCall.CLAZZ_SEPARATOR);
@@ -42,7 +42,7 @@ public class ClazzFileFinder {
 
    private final FolderConfig executionConfig;
 
-   public ClazzFileFinder(final FolderConfig executionConfig) {
+   public TypeFileFinder(final FolderConfig executionConfig) {
       this.executionConfig = executionConfig;
    }
 
@@ -52,12 +52,12 @@ public class ClazzFileFinder {
     * @param projectFolder Folder where to search for classes
     * @return list of classes
     */
-   public List<String> getClasses(final File projectFolder) {
+   public List<String> getTypes(final File projectFolder) {
       File clazzpathFolder = getFirstExistingFolder(projectFolder, executionConfig.getClazzFolders());
 
       final List<String> clazzes = new LinkedList<>();
       if (clazzpathFolder != null) {
-         addClazzes(clazzes, clazzpathFolder);
+         addTypes(clazzes, clazzpathFolder);
       }
 
       final List<String> testClazzes = getTestClazzes(projectFolder);
@@ -87,7 +87,7 @@ public class ClazzFileFinder {
       final List<String> clazzes = new LinkedList<>();
       final File testFolder = getFirstExistingFolder(projectFolder, executionConfig.getTestClazzFolders());
       if (testFolder != null && testFolder.exists()) {
-         addClazzes(clazzes, testFolder);
+         addTypes(clazzes, testFolder);
       }
       return clazzes;
    }
@@ -98,8 +98,8 @@ public class ClazzFileFinder {
     * @param clazzes List where classes should be added
     * @param folder Main folder that should be searched
     */
-   private static void addClazzes(final List<String> clazzes, final File folder) {
-      addJavaClasses(clazzes, folder);
+   private static void addTypes(final List<String> clazzes, final File folder) {
+      addJavaTypes(clazzes, folder);
       addScalaClasses(clazzes, folder);
    }
 
@@ -113,7 +113,7 @@ public class ClazzFileFinder {
       }
    }
 
-   private static void addJavaClasses(final List<String> clazzes, final File folder) {
+   private static void addJavaTypes(final List<String> clazzes, final File folder) {
       WildcardFileFilter fileFilter = new WildcardFileFilter("*" + Endings.JAVA);
       Collection<File> javaFiles = FileUtils.listFiles(folder, fileFilter, TrueFileFilter.INSTANCE);
       for (final File clazzFile : javaFiles) {
@@ -123,7 +123,7 @@ public class ClazzFileFinder {
          try {
             final CompilationUnit cu = JavaParserProvider.parse(clazzFile);
             for (final Node node : cu.getChildNodes()) {
-               final List<String> nodeChildClazzes = ClazzFinder.getEntities(node, packageName, ".");
+               final List<String> nodeChildClazzes = TypeFinder.getTypes(node, packageName, ".");
                clazzes.addAll(nodeChildClazzes);
             }
          } catch (final ParseProblemException e) {
@@ -233,7 +233,7 @@ public class ClazzFileFinder {
                   try {
                      if (containingFileCandidate.isFile()) {
                         CompilationUnit cu = JavaParserProvider.parse(containingFileCandidate);
-                        List<String> clazzes = ClazzFinder.getClazzes(cu);
+                        List<String> clazzes = TypeFinder.getClazzes(cu);
                         if (clazzes.contains(clazzName)) {
                            return containingFileCandidate;
                         }

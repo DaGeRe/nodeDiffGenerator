@@ -110,7 +110,7 @@ public class SourceReadUtils {
       return null;
    }
    
-   public static List<NodeList<BodyDeclaration<?>>> getAnonymusClasses(final Node parent) {
+   static List<NodeList<BodyDeclaration<?>>> getAnonymusClasses(final Node parent) {
       final List<NodeList<BodyDeclaration<?>>> foundAnonymousClasses = new LinkedList<>();
       for (final Node child : parent.getChildNodes()) {
          if (child instanceof ObjectCreationExpr) {

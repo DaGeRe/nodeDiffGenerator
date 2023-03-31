@@ -9,8 +9,8 @@ import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.body.TypeDeclaration;
 
-import de.dagere.nodeDiffDetector.clazzFinding.ClazzFinder;
 import de.dagere.nodeDiffDetector.data.MethodCall;
+import de.dagere.nodeDiffDetector.typeFinding.TypeFinder;
 
 public class TestClazzFinder {
    
@@ -19,7 +19,7 @@ public class TestClazzFinder {
       String test = "class A{ }";
       JavaParser parser = new JavaParser();
       List<Node> parsed = parser.parse(test).getResult().get().getChildNodes();
-      TypeDeclaration<?> clazz = ClazzFinder.findClazz(new MethodCall("A", ""), parsed);
+      TypeDeclaration<?> clazz = TypeFinder.findClazz(new MethodCall("A", ""), parsed);
       Assert.assertNotNull(clazz);
    }
    
@@ -28,7 +28,7 @@ public class TestClazzFinder {
       String test = "class A{ class B{ } }";
       JavaParser parser = new JavaParser();
       List<Node> parsed = parser.parse(test).getResult().get().getChildNodes();
-      TypeDeclaration<?> clazz = ClazzFinder.findClazz(new MethodCall("A$B", ""), parsed);
+      TypeDeclaration<?> clazz = TypeFinder.findClazz(new MethodCall("A$B", ""), parsed);
       Assert.assertNotNull(clazz);
    }
    
@@ -37,7 +37,7 @@ public class TestClazzFinder {
       String test = "class A{ class B{ class C{ } } }";
       JavaParser parser = new JavaParser();
       List<Node> parsed = parser.parse(test).getResult().get().getChildNodes();
-      TypeDeclaration<?> clazz = ClazzFinder.findClazz(new MethodCall("A$B$C", ""), parsed);
+      TypeDeclaration<?> clazz = TypeFinder.findClazz(new MethodCall("A$B$C", ""), parsed);
       Assert.assertNotNull(clazz);
    }
 }

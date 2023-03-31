@@ -11,10 +11,10 @@ import org.apache.logging.log4j.Logger;
 
 import com.github.javaparser.ParseException;
 
-import de.dagere.nodeDiffDetector.clazzFinding.ClazzFileFinder;
 import de.dagere.nodeDiffDetector.config.FolderConfig;
 import de.dagere.nodeDiffDetector.config.SourceCodeFolders;
 import de.dagere.nodeDiffDetector.data.MethodCall;
+import de.dagere.nodeDiffDetector.typeFinding.TypeFileFinder;
 import de.dagere.peass.dependency.changesreading.ClazzChangeData;
 
 public class ChangeDetector {
@@ -33,7 +33,7 @@ public class ChangeDetector {
       final MethodCall clazz = clazzIterator.next();
       final ClazzChangeData changeData = new ClazzChangeData(clazz);
       try {
-         ClazzFileFinder finder = new ClazzFileFinder(config);
+         TypeFileFinder finder = new TypeFileFinder(config);
          final File newFile = finder.getSourceFile(sourceCodeFolders.getProjectFolder(), clazz);
          final File oldFile = finder.getSourceFile(sourceCodeFolders.getOldSources(), clazz);
          LOG.info("Comparing {}", newFile, oldFile);
@@ -61,7 +61,7 @@ public class ChangeDetector {
          final ClazzChangeData changeData, final File newFile, final File oldFile) throws ParseException, IOException {
       FileComparisonUtil.getChangedMethods(newFile, oldFile, changeData);
       boolean isImportChange = false;
-      ClazzFileFinder finder = new ClazzFileFinder(config);
+      TypeFileFinder finder = new TypeFileFinder(config);
       for (MethodCall entity : changeData.getImportChanges()) {
          final File entityFile = finder.getSourceFile(sourceCodeFolders.getProjectFolder(), entity);
          if (entityFile != null && entityFile.exists()) {
