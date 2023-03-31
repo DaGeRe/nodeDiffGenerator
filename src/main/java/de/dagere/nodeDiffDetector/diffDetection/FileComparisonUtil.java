@@ -162,28 +162,6 @@ public final class FileComparisonUtil {
       return result;
    }
 
-   public static String getMethodSource(final File projectFolder, final MethodCall entity, final String method, final FolderConfig config) throws FileNotFoundException {
-      TypeFileFinder finder = new TypeFileFinder(config);
-      final File file = finder.getSourceFile(projectFolder, entity);
-      if (file != null) {
-         LOG.debug("Found:  {} {}", file, file.exists());
-         final CompilationUnit cu = JavaParserProvider.parse(file);
-
-         return getMethodSource(entity, method, cu);
-      } else {
-         return "";
-      }
-   }
-
-   public static String getMethodSource(final MethodCall entity, final String method, final CompilationUnit clazzUnit) {
-      final Node node = SourceReadUtils.getMethod(entity, clazzUnit);
-      if (node != null) {
-         return node.toString();
-      } else {
-         return "";
-      }
-   }
-
    /**
     * Returns the information whether the source has changed
     * 

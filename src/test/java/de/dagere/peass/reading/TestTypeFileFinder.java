@@ -13,11 +13,11 @@ import org.mockito.Mockito;
 
 import de.dagere.nodeDiffDetector.config.FolderConfig;
 import de.dagere.nodeDiffDetector.data.MethodCall;
-import de.dagere.nodeDiffDetector.diffDetection.FileComparisonUtil;
+import de.dagere.nodeDiffDetector.sourceReading.MethodReader;
 import de.dagere.nodeDiffDetector.testUtils.TestConstants;
 import de.dagere.nodeDiffDetector.typeFinding.TypeFileFinder;
 
-public class TestClazzFileFinder {
+public class TestTypeFileFinder {
    
    private static final File SOURCE = new File("src/test/resources/clazzFinderExample/");
    
@@ -62,7 +62,7 @@ public class TestClazzFileFinder {
       Assert.assertNotNull(sourceFileInterface);
       
       MethodCall exampleEntity = new MethodCall("de.dagere.LocalClass#myMethod(int)");
-      String text = FileComparisonUtil.getMethodSource(SOURCE, exampleEntity, exampleEntity.getMethod(), TestConstants.DEFAULT_FOLDERS);
+      String text = MethodReader.getMethodSource(SOURCE, exampleEntity, exampleEntity.getMethod(), TestConstants.DEFAULT_FOLDERS);
       MatcherAssert.assertThat(text, Matchers.containsString("this.i = i;"));
    }
 }
