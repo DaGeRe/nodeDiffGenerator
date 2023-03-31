@@ -16,5 +16,5 @@ Currently, this is only provided for Java source code. In the future, it is plan
 
 nodeDiffDetector is **licensed** under the **[MIT License]** and **[AGPL License]**. This means you can use nodeDiffDetector under the conditions of one of these licenses, but future forks might choose to only continue using one of these licenses.
 
-[MIT License]: https://github.com/DaGeRe/peass/blob/main/LICSENSE.MIT
-[AGPL License]: https://github.com/DaGeRe/peass/blob/main/LICENSE.AGPL
+[MIT License]: https://github.com/DaGeRe/nodeDiffDetector/blob/main/LICENSE.MIT
+[AGPL License]: https://github.com/DaGeRe/nodeDiffDetector/blob/main/LICENSE.AGPL
