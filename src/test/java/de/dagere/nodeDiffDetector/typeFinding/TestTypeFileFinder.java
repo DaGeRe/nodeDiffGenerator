@@ -1,4 +1,4 @@
-package de.dagere.peass.reading;
+package de.dagere.nodeDiffDetector.typeFinding;
 
 import java.io.File;
 import java.io.FileNotFoundException;

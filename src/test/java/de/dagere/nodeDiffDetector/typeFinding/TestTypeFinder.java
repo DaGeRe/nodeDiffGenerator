@@ -1,4 +1,4 @@
-package de.dagere.peass.reading;
+package de.dagere.nodeDiffDetector.typeFinding;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import com.github.javaparser.ast.body.TypeDeclaration;
 import de.dagere.nodeDiffDetector.data.MethodCall;
 import de.dagere.nodeDiffDetector.typeFinding.TypeFinder;
 
-public class TestClazzFinder {
+public class TestTypeFinder {
    
    @Test
    public void testFindClazz() {
