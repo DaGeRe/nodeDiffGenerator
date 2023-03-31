@@ -15,7 +15,6 @@ import de.dagere.nodeDiffDetector.config.FolderConfig;
 import de.dagere.nodeDiffDetector.config.SourceCodeFolders;
 import de.dagere.nodeDiffDetector.data.Type;
 import de.dagere.nodeDiffDetector.typeFinding.TypeFileFinder;
-import de.dagere.peass.dependency.changesreading.ClazzChangeData;
 
 public class ChangeDetector {
    

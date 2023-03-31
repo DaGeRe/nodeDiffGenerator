@@ -1,4 +1,4 @@
-package de.dagere.peass.dependency.traces;
+package de.dagere.nodeDiffDetector.sourceReading;
 
 import java.io.ByteArrayInputStream;
 
@@ -12,6 +12,7 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.EnumDeclaration;
 
 import de.dagere.nodeDiffDetector.data.MethodCall;
+import de.dagere.nodeDiffDetector.sourceReading.ParameterComparator;
 
 public class TestParameterComparator {
 

@@ -1,4 +1,4 @@
-package de.dagere.peass.dependency.changesreading;
+package de.dagere.nodeDiffDetector.typeFinding;
 
 import java.util.Arrays;
 import java.util.HashSet;

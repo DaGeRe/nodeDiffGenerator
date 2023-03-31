@@ -19,7 +19,6 @@ import de.dagere.nodeDiffDetector.config.FolderConfig;
 import de.dagere.nodeDiffDetector.data.MethodCall;
 import de.dagere.nodeDiffDetector.typeFinding.TypeFileFinder;
 import de.dagere.nodeDiffDetector.utils.JavaParserProvider;
-import de.dagere.peass.dependency.traces.ParameterComparator;
 
 public class MethodReader {
 

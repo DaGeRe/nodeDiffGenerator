@@ -1,4 +1,4 @@
-package de.dagere.peass.dependency.changesreading;
+package de.dagere.nodeDiffDetector.typeFinding;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import com.github.javaparser.ast.CompilationUnit;
 
 import de.dagere.nodeDiffDetector.testUtils.TestConstants;
+import de.dagere.nodeDiffDetector.typeFinding.FQNDeterminer;
 import de.dagere.nodeDiffDetector.utils.JavaParserProvider;
 
 public class TestFQNDeterminer {

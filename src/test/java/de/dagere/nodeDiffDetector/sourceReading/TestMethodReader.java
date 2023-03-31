@@ -1,7 +1,9 @@
-package de.dagere.peass.dependency.traces;
+package de.dagere.nodeDiffDetector.sourceReading;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
+
+import de.dagere.nodeDiffDetector.sourceReading.ParameterComparator;
 
 public class TestMethodReader {
    

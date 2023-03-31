@@ -43,7 +43,6 @@ import de.dagere.nodeDiffDetector.data.MethodCall;
 import de.dagere.nodeDiffDetector.sourceReading.SourceReadUtils;
 import de.dagere.nodeDiffDetector.typeFinding.TypeFileFinder;
 import de.dagere.nodeDiffDetector.utils.JavaParserProvider;
-import de.dagere.peass.dependency.changesreading.ClazzChangeData;
 
 /**
  * Helps to compare whether two versions of a file may have changed performance (and whether this change is for the use of the whole file or only some methods).

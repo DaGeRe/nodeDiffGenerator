@@ -34,7 +34,6 @@ import com.github.javaparser.ParseException;
 
 import de.dagere.nodeDiffDetector.data.MethodCall;
 import de.dagere.nodeDiffDetector.data.Type;
-import de.dagere.peass.dependency.changesreading.ClazzChangeData;
 
 /**
  * Tests whether the class comparison works for the given files, i.e. returns whether the class and its method have changed correct.

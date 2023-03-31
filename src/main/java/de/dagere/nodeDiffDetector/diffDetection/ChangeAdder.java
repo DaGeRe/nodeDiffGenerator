@@ -20,9 +20,8 @@ import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.stmt.Statement;
 
 import de.dagere.nodeDiffDetector.data.Type;
+import de.dagere.nodeDiffDetector.typeFinding.FQNDeterminer;
 import de.dagere.nodeDiffDetector.typeFinding.TypeFinder;
-import de.dagere.peass.dependency.changesreading.ClazzChangeData;
-import de.dagere.peass.dependency.changesreading.FQNDeterminer;
 
 public class ChangeAdder {
    
