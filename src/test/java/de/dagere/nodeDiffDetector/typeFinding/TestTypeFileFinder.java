@@ -62,7 +62,7 @@ public class TestTypeFileFinder {
       Assert.assertNotNull(sourceFileInterface);
       
       MethodCall exampleEntity = new MethodCall("de.dagere.LocalClass#myMethod(int)");
-      String text = MethodReader.getMethodSource(SOURCE, exampleEntity, exampleEntity.getMethod(), TestConstants.DEFAULT_FOLDERS);
+      String text = MethodReader.getMethodSource(SOURCE, exampleEntity, TestConstants.DEFAULT_FOLDERS);
       MatcherAssert.assertThat(text, Matchers.containsString("this.i = i;"));
    }
 }

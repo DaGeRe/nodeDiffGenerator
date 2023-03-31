@@ -82,14 +82,14 @@ public class MethodReader {
       return null;
    }
    
-   public static String getMethodSource(final File projectFolder, final MethodCall entity, final String method, final FolderConfig config) throws FileNotFoundException {
+   public static String getMethodSource(final File projectFolder, final MethodCall entity, final FolderConfig config) throws FileNotFoundException {
       TypeFileFinder finder = new TypeFileFinder(config);
       final File file = finder.getSourceFile(projectFolder, entity);
       if (file != null) {
          LOG.debug("Found:  {} {}", file, file.exists());
          final CompilationUnit cu = JavaParserProvider.parse(file);
 
-         return getMethodSource(entity, method, cu);
+         return getMethodSource(entity, cu);
       } else {
          return "";
       }
@@ -99,7 +99,7 @@ public class MethodReader {
     * @deprecated Please use TypeCache.getMethodSource instead (and use a type cache, to avoid reloading and reparsing files)
     */
    @Deprecated
-   private static String getMethodSource(final MethodCall entity, final String method, final CompilationUnit clazzUnit) {
+   private static String getMethodSource(final MethodCall entity, final CompilationUnit clazzUnit) {
       final Node node = SourceReadUtils.getMethod(entity, clazzUnit);
       if (node != null) {
          return node.toString();
