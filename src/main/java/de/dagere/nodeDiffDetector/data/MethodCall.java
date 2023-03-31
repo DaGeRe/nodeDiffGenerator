@@ -19,7 +19,7 @@ public class MethodCall extends Type {
    public static final String METHOD_SEPARATOR = "#";
    public static final String CLAZZ_SEPARATOR = "$";
 
-   private String method;
+   private final String method;
    private final List<String> parameters = new LinkedList<String>();
 
    @JsonCreator
@@ -46,10 +46,6 @@ public class MethodCall extends Type {
 
    public String getMethod() {
       return method;
-   }
-
-   public void setMethod(final String method) {
-      this.method = method;
    }
 
    @JsonIgnore
@@ -105,7 +101,6 @@ public class MethodCall extends Type {
 
    public MethodCall copy() {
       final MethodCall copy = new MethodCall(javaClazzName, module, method);
-      copy.setMethod(this.method);
       copy.createParameters(getParameterString());
       return copy;
    }
