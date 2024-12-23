@@ -122,7 +122,7 @@
 
   <properties>
     <mockito.version>5.14.2</mockito.version>
-    <kopeme.version>1.4.0</kopeme.version>
+    <kopeme.version>1.4.1</kopeme.version>
   </properties>
 
   <licenses>
